@@ -9,7 +9,7 @@
     = form.input :meta_description, input_html: { rows: 3, class: 'link-url-hide' }
     = form.input :locale, :as => :hidden, :label => false
     -#- unless @page.new_record?
-    - @section_forms.each do |section_form|
+    - @section_forms.sort_by{|sf| sf.object.name}.each do |section_form|
       %section{:name => section_form.object.name}
         = section_form.semantic_fields_for :translations do |section_form_translated|
           - if section_form_translated.object.locale.to_sym == locale.code
