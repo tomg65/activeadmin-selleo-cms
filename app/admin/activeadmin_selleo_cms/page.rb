@@ -104,4 +104,17 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
     end
   end
 
+  sidebar "Sub pages", only: [:show, :edit] do
+    ol do
+      if resource.children.any?
+        resource.children.each do |child|
+          li link_to child, [:edit, :admin, child]
+        end
+      else
+        li "No pages"
+      end
+    end
+  end
+
+
 end
