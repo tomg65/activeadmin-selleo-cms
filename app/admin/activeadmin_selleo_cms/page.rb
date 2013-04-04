@@ -105,17 +105,16 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
     end
   end
 
-  sidebar "Sub pages", only: [:show, :edit] do
+  sidebar "Page sections", only: [:edit, :new] do
     ol do
-      if resource.children.any?
-        resource.children.each do |child|
-          li link_to child, [:edit, :admin, child]
+      if resource.sections.any?
+        resource.sections.order(:name).each do |section|
+          li link_to section.name.titleize, "#id-#{section.name}"
         end
       else
-        li "No pages"
+        li "No sections on this layout"
       end
     end
   end
-
 
 end
