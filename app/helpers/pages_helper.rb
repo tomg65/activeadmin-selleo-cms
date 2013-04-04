@@ -1,17 +1,21 @@
 module PagesHelper
   def link_to_locale(link_name, locale, page=nil)
     if page
-      link_to link_name, url_to_page(page, locale.to_s)
+      link_to link_name, with_host(url_to_page(page, locale.to_s))
     elsif request.fullpath.match(/^\/\w{2}\/.*/)
-      link_to link_name, request.fullpath.gsub(/^\/(\w{2})\//, "/#{locale.code}/")
+      link_to link_name, with_host(request.fullpath.gsub(/^\/(\w{2})\//, "/#{locale.code}/"))
     else
-      link_to link_name, "/#{locale.code}"
+      link_to link_name, with_host("/#{locale.code}")
     end
+  end
+
+  def with_host(relative_path)
+    "#{request.protocol}#{request.host_with_port}#{relative_path}"
   end
 
   def link_to_search_result(result)
     if result.is_a? ActiveadminSelleoCms::Page
-      "#{link_to result.breadcrumb, result.url} #{link_to "(e)", edit_admin_page_path(result.id), target: '_blank' if current_user}".html_safe
+      "#{link_to result.breadcrumb, with_host(result.url)} #{link_to "(e)", edit_admin_page_path(result.id), target: '_blank' if current_user}".html_safe
     end
   end
 
@@ -19,13 +23,13 @@ module PagesHelper
     return "#" unless page
     _locale = I18n.locale
     I18n.locale = locale
-    _url = page.url
+    _url = with_host(page.url)
     I18n.locale = _locale
     return _url
   end
 
   def link_to_page(page, link_name=nil, options={})
-    link_to (link_name || page.title), page.url, options
+    link_to (link_name || page.title), with_host(page.url), options
   end
 
   def s(name)

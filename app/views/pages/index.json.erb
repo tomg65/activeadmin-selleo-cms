@@ -1,0 +1,1 @@
+<%= ActiveadminSelleoCms::Page.published.reorder("lft ASC").map{|p| [p.to_label, p.url(locale: false)]}.to_json.html_safe %>

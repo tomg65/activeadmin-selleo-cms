@@ -87,16 +87,37 @@
         });
     });
 
-  $(function () {
-      $('input[type="file"]').fileupload({
-          dataType: 'script',
-          type: 'PUT',
-          done: function (e, data) {
-              $.each(data.result.files, function (index, file) {
-                  $('<p/>').text(file.name).appendTo(document.body);
+  //$(function () {
+  //    $('input[type="file"]').fileupload({
+  //        dataType: 'script',
+  //        type: 'PUT',
+  //        done: function (e, data) {
+  //            $.each(data.result.files, function (index, file) {
+  //                $('<p/>').text(file.name).appendTo(document.body);
+  //            });
+  //        }
+  //    }).bind('fileuploadsubmit', function (e, data) {
+  //          data.formData = $(this).closest('fieldset').serializeArray();
+  //      });
+  //});
+
+  $(function() {
+
+      var $sidebar   = $("#sidebar"),
+          $window    = $(window),
+          offset     = $sidebar.offset(),
+          topPadding = 15;
+
+      $window.scroll(function() {
+          if ($window.scrollTop() > offset.top) {
+              $sidebar.stop().animate({
+                  marginTop: $window.scrollTop() - offset.top + topPadding
+              });
+          } else {
+              $sidebar.stop().animate({
+                  marginTop: 0
               });
           }
-      }).bind('fileuploadsubmit', function (e, data) {
-            data.formData = $(this).closest('fieldset').serializeArray();
-        });
+      });
+
   });

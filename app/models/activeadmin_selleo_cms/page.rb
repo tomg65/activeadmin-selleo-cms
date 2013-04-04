@@ -129,8 +129,12 @@ module ActiveadminSelleoCms
       end
     end
 
-    def method_missing(sym, *args)
-      sections.with_name(sym).first
+    def go_back_page
+      if parent and !parent.redirect_to_first_sub_page
+        parent
+      elsif parent
+        parent.go_back_page
+      end
     end
 
     class Translation
