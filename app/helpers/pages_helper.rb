@@ -10,7 +10,7 @@ module PagesHelper
   end
 
   def with_host(relative_path)
-    "#{request.protocol}#{request.host_with_port}#{relative_path}"
+    relative_path.match(/http/) ? relative_path : "#{request.protocol}#{request.host_with_port}#{relative_path}"
   end
 
   def link_to_search_result(result)

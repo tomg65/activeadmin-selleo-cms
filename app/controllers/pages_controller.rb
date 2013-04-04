@@ -22,6 +22,8 @@ class PagesController < CmsController
       redirect_to page_path(I18n.locale, root)
     elsif @page.redirect_to_first_sub_page
       redirect_to page_path(I18n.locale, @page.children.first || root)
+    elsif @page.is_link_url
+      redirect_to @page.link_url
     end
   end
 
