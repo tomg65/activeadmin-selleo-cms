@@ -63,6 +63,18 @@ module ActiveadminSelleoCms
       end
     end
 
+    def layout_section
+      @layout_section ||= layout ? layout.find_section(name) : nil
+    end
+
+    def method_missing(sym, *args)
+      if layout_section and layout_section.respond_to? sym
+        layout_section.send(sym)
+      else
+        super
+      end
+    end
+
     class Translation
       attr_protected :id
 

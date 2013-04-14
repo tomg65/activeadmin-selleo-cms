@@ -1,0 +1,40 @@
+= semantic_form_for [:admin, @section_translation], url: admin_section_translation_path(@section_translation.id), html: { multipart: true } do |form|
+
+  -#= @page.errors.full_messages
+
+  = form.inputs do
+    - if form.object.activeadmin_selleo_cms_section.attachments?
+      = form.inputs for: [:attachments, form.object.attachments.detect{|a| a.new_record?} || ActiveadminSelleoCms::Attachment.new] do |attachment_form|
+        = attachment_form.input :data, label: "File to upload"
+        = attachment_form.input :cover_width, as: :hidden, value: form.object.activeadmin_selleo_cms_section.cover_width
+        = attachment_form.input :cover_height, as: :hidden, value: form.object.activeadmin_selleo_cms_section.cover_height
+        = attachment_form.input :cover_resize_method, as: :hidden, value: form.object.activeadmin_selleo_cms_section.cover_resize_method
+        = attachment_form.input :cover, label: "Cover image"
+        = attachment_form.input :caption
+        = attachment_form.action :submit
+
+
+  %fieldset.inputs
+    %ol
+      - if form.object.attachments.any? and !form.object.new_record?
+        - form.object.attachments.each do |attachment|
+          - unless attachment.new_record?
+            %li{"data-asset-id" => attachment.id, :style => "float: left; max-width: 100px"}
+              .attachment
+                .cover-image= image_tag(attachment.cover.url, style: "max-width:80px") if attachment.cover.exists?
+                .file-name= attachment.caption or attachment.data_file_name
+
+:javascript
+  $(function () {
+      $('input[type="file"]').fileupload({
+          dataType: 'script',
+          type: 'PUT',
+          done: function (e, data) {
+              $.each(data.result.files, function (index, file) {
+                 $('<p/>').text(file.name).appendTo(document.body);
+              });
+          }
+      }).bind('fileuploadsubmit', function (e, data) {
+            data.formData = $(this).closest('fieldset').serializeArray();
+        });
+  });
