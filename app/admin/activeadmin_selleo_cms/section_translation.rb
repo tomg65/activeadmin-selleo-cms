@@ -1,12 +1,16 @@
 ActiveAdmin.register ActiveadminSelleoCms::Section::Translation, as: 'SectionTranslation' do
   menu false
 
-  actions :all
-
   form :partial => "form"
 
   controller do
-    respond_to :html, :js
+    respond_to :html
+
+    def edit
+      super do |format|
+        format.html { render action: :edit, layout: false }
+      end
+    end
 
     def create
       create! do |success, failure|

@@ -1,0 +1,14 @@
+= semantic_form_for [:admin, resource], remote: true, html: { multipart: true } do |form|
+
+  -#= @page.errors.full_messages
+
+  = form.inputs id: 'attachment_fields' do
+    = form.input :data, label: "File", hint: resource.data_file_name
+    = form.input :assetable_type, as: :hidden, value: resource.assetable_type
+    = form.input :assetable_id, as: :hidden, value: resource.assetable_id
+    = form.input :cover_width, as: :hidden, value: resource.assetable.activeadmin_selleo_cms_section.cover_width
+    = form.input :cover_height, as: :hidden, value: resource.assetable.activeadmin_selleo_cms_section.cover_height
+    = form.input :cover_resize_method, as: :hidden, value: resource.assetable.activeadmin_selleo_cms_section.cover_resize_method
+    = form.input :cover, label: "Cover image", hint: (resource.cover.exists? ? image_tag(resource.cover.url) : "No cover image")
+    = form.input :caption
+  = form.actions :submit

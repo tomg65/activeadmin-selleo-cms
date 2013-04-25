@@ -49,6 +49,8 @@
     %li.cancel
       = link_to I18n.t('active_admin.cancel'), admin_pages_path
 
+%div#file-manager
+%div#files-manager
 
 :javascript
   function is_link_url(){
@@ -85,6 +87,9 @@
           $(this).closest('form').find('input[name="_change_layout"]').attr('value','1');
           $(this).closest('form').submit();
         });
+
+        $('#files-manager').dialog({width: 900, height: 700, title: 'Files manager', modal: true, autoOpen: false});
+        $('#file-manager').dialog({width: 700, title: 'File manager', modal: true, autoOpen: false});
     });
 
   $(function() {

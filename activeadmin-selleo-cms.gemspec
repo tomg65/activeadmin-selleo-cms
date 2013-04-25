@@ -29,7 +29,8 @@ Gem::Specification.new do |s|
   s.add_dependency "texticle", "~> 2.0"
   s.add_dependency "i18n-active_record"
   s.add_dependency "nokogiri"
-  s.add_dependency "jquery-fileupload-rails"
+  #s.add_dependency "jquery-fileupload-rails"
+  s.add_dependency "remotipart", "~> 1.0"
 
   s.add_development_dependency "pg"
   s.add_development_dependency "rspec"
