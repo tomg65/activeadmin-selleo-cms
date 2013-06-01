@@ -3,6 +3,7 @@ ActiveAdmin.application.tap do |config|
   config.register_javascript 'ckeditor/init.js'
   config.register_javascript 'activeadmin-selleo-cms/custom.js'
   config.register_javascript 'activeadmin-selleo-cms/jquery-ui-timepicker-addon.js'
+  config.register_javascript 'jquery.iframe-transport.js'
   config.register_javascript 'jquery.remotipart.js'
 
   config.register_stylesheet 'activeadmin-selleo-cms/jquery-ui.css'
