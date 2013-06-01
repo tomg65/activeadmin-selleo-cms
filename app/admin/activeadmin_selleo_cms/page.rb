@@ -53,19 +53,19 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
   end
 
   action_item only:[:show] do
-    link_to "Edit Page", edit_admin_page_path(page.id)
+    link_to t("active_admin.edit_model", model: nil), edit_admin_page_path(page.id)
   end
 
   action_item only:[:index] do
-    link_to "New Page", new_admin_page_path
+    link_to t("active_admin.new_model", model: active_admin_config.resource_label), new_admin_page_path
   end
 
   action_item only:[:show,:edit] do
-    link_to "View on site", page.url, target: '_blank'
+    link_to t("active_admin.cms.view_on_site"), page.url, target: '_blank'
   end
 
   action_item only:[:show,:edit] do
-    link_to "Delete Page", admin_page_path(page.id), method: 'DELETE', confirm: 'Are you sure?'
+    link_to t("active_admin.delete_model", model: nil), admin_page_path(page.id), method: 'DELETE', confirm: 'Are you sure?'
   end
 
   collection_action :reorder, :method => :get do
@@ -105,16 +105,19 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
     end
   end
 
-  sidebar "Page sections", only: [:edit, :new] do
+  sidebar I18n.t("active_admin.cms.navigation"), only: [:edit, :new] do
+    h4 link_to t("active_admin.cms.general_options"), '#id-general-options'
+    h4 link_to t("active_admin.cms.metadata"), '#id-meta-data'
     ol do
       if resource.sections.any?
         resource.sections.order(:name).each do |section|
           li link_to section.name.titleize, "#id-#{section.name}", onclick: "$('#id-#{section.name}').effect('highlight')"
         end
       else
-        li "No sections on this layout"
+        li t("active_admin.cms.no_sections_defined")
       end
     end
+    button_to_function(t("active_admin.cms.save_changes"), "savePage()")
   end
 
 end

@@ -85,8 +85,6 @@ $(function(){
       $(this).closest('fieldset').find('ol').toggle();
     });
 
-//    $('i.folded').click();
-
     $('input[multiple]').each(function(){
         $(this).attr('name', $(this).attr('name').replace(/\[\]$/, '') );
     });
@@ -95,3 +93,15 @@ $(function(){
     $( ".sortable" ).disableSelection();
 
 });
+
+function savePage(){
+    form = $('form[id*="_page_"]');
+    $.ajax( {
+        type: "POST",
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(resp) {
+            $('body').effect('highlight')
+        }
+    } );
+}

@@ -90,3 +90,7 @@ div.ui-dialog {
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
+#sidebar h4 {
+    margin-bottom: 0.25em;
+}

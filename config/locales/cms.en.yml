@@ -11,6 +11,12 @@ en:
       view_on_site: "View on site"
       sub_pages: "Sub pages"
       edit: "Edit"
+      no_sections_defined: "No sections defined"
+      navigation: "Navigation"
+      general_options: "General options"
+      metadata: "Metadata"
+      sections: "Sections"
+      save_changes: "Save changes"
       file_manager:
         title: "File manager"
         upload_file: "Upload file"
