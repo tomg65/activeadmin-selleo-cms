@@ -1,4 +1,5 @@
 %li{"id" => "related_item_#{related_item.id}", "data-related-item-id" => related_item.id}
   .related_item
     .url= related_item.title.blank? ? related_item.related_url : related_item.title
-    = link_to_function "Delete", "delete_related_item(#{related_item.id})"
+    = link_to_function t("active_admin.cms.edit"), "edit_related_item(#{related_item.id})"
+    = link_to_function "Delete", "delete_related_item(#{related_item.id})", class: "fltr"

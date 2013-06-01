@@ -23,12 +23,14 @@ function fileManager(url){
 }
 
 function delete_asset(asset_id) {
-    $.ajax({
-        url: '/admin/assets/' + asset_id + '.js',
-        type: 'DELETE'
-    }).error(function(){
-        alert('An error occured while trying to delete the asset');
-    });
+    if(confirm('Are you sure?')) {
+        $.ajax({
+            url: '/admin/assets/' + asset_id + '.js',
+            type: 'DELETE'
+        }).error(function(){
+            alert('An error occured while trying to delete the asset');
+        });
+    }
 }
 
 function edit_attachment(attachment_id) {
@@ -39,13 +41,19 @@ function edit_image(image_id) {
     fileManager('/admin/images/' + image_id + '/edit.js');
 }
 
+function edit_related_item(related_item_id) {
+    fileManager('/admin/related_items/' + related_item_id + '/edit.js');
+}
+
 function delete_related_item(related_item_id) {
-    $.ajax({
-        url: '/admin/related_items/' + related_item_id + '.js',
-        type: 'DELETE'
-    }).error(function(){
-        alert('An error occured while trying to delete the related item');
-    });
+    if(confirm('Are you sure?')) {
+        $.ajax({
+            url: '/admin/related_items/' + related_item_id + '.js',
+            type: 'DELETE'
+        }).error(function(){
+                alert('An error occured while trying to delete the related item');
+            });
+    }
 }
 
 function update_positions(pagesArray) {
