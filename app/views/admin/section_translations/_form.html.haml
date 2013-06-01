@@ -1,20 +1,24 @@
-%h3{ :style => "margin: 5px 0 10px 0" }= t("active_admin.cms.file_manager.upload_file")
+%h3.upload-file= t("active_admin.cms.file_manager.upload_file")
 - if resource.activeadmin_selleo_cms_section.attachments?
   = render partial: 'attachments_form', locals: { attachment: ActiveadminSelleoCms::Attachment.new, section_translation: resource }
 - elsif resource.activeadmin_selleo_cms_section.images?
   = render partial: 'images_form', locals: { image: ActiveadminSelleoCms::Image.new, section_translation: resource }
+- elsif resource.activeadmin_selleo_cms_section.related?
+  = render partial: 'related_items_form', locals: { related_item: ActiveadminSelleoCms::RelatedItem.new, section_translation: resource }
 
 %hr
 
-%h3{ :style => "margin-top: 20px" }= t("active_admin.cms.file_manager.manage_files")
+%h3.manage-files= t("active_admin.cms.file_manager.manage_files")
 %small= t("active_admin.cms.file_manager.hint")
 %form
-  %fieldset.inputs
+  %fieldset.inputs.assets
     %ol#assets
       - if resource.activeadmin_selleo_cms_section.attachments?
         = render partial: '/admin/attachments/attachment', collection: resource.attachments
       - elsif resource.activeadmin_selleo_cms_section.images?
         = render partial: '/admin/images/image', collection: resource.images
+      - elsif resource.activeadmin_selleo_cms_section.related?
+        = render partial: '/admin/related_items/related_item', collection: resource.related_items
 
 :javascript
   $('ol#assets').sortable({

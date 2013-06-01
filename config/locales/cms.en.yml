@@ -1,4 +1,11 @@
 en:
+  activerecord:
+    attributes:
+      activeadmin_selleo_cms/image:
+        data: "Image"
+      activeadmin_selleo_cms/attachment:
+        data: "Attachment"
+        cover: "Cover image"
   active_admin:
     cms:
       view_on_site: "View on site"
@@ -9,3 +16,4 @@ en:
         upload_file: "Upload file"
         manage_files: "Manage files"
         hint: "Hint: drag and drop files to reorder them"
+        no_cover: "No cover image"

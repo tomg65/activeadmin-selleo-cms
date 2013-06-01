@@ -109,7 +109,7 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
     ol do
       if resource.sections.any?
         resource.sections.order(:name).each do |section|
-          li link_to section.name.titleize, "#id-#{section.name}"
+          li link_to section.name.titleize, "#id-#{section.name}", onclick: "$('#id-#{section.name}').effect('highlight')"
         end
       else
         li "No sections on this layout"

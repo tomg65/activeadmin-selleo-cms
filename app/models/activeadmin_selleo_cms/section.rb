@@ -83,7 +83,7 @@ module ActiveadminSelleoCms
       has_many :images, as: :assetable, dependent: :destroy, order: 'position ASC'
       has_one :attachment, as: :assetable, dependent: :destroy
       has_one :image, as: :assetable, dependent: :destroy
-      has_many :related_items, as: :relatable, dependent: :destroy
+      has_many :related_items, as: :relatable, dependent: :destroy, order: 'position ASC'
 
       accepts_nested_attributes_for :attachments, reject_if: lambda{ |a| a[:data].blank? }
       accepts_nested_attributes_for :attachment, reject_if: lambda{ |a| a[:data].blank? }

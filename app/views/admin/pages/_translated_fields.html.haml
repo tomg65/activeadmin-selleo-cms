@@ -27,40 +27,36 @@
                   %li.input
                     %label Image
                     %ol{ :style => "padding-left: 275px;" }
-                      -#%li= section_form_translated.object.image ? section_form_translated.template.image_tag(section_form_translated.object.image.url) : "No image yet"
-                      %li= button_to_function "Edit image", "$('#file-manager').load('#{section_form_translated.object.image ? edit_admin_image_path(section_form_translated.object.image.id): new_admin_image_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id }) }').dialog('open')", style: "padding: 5px;"
+                      %li= button_to_function "Edit image", "fileManager('#{section_form_translated.object.image ? edit_admin_image_path(section_form_translated.object.image.id) : new_admin_image_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id })}')", style: "padding: 5px;"
 
                 - elsif section.images?
                   %li.input
                     %label Attachments
                     %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function "Manage attachments", "$('#files-manager').load('#{edit_admin_section_translation_path(section_form_translated.object.id)}').dialog('open')", style: "padding: 5px;"
+                      %li= button_to_function "Manage attachments", "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
                 - elsif section.attachment?
                   %li.input
                     %label Attachment
                     %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function "Edit attachment", "$('#file-manager').load('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id }) }').dialog('open')", style: "padding: 5px;"
+                      %li= button_to_function "Edit attachment", "fileManager('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id }) }')", style: "padding: 5px;"
 
                 = section_form_translated.input :locale, :as => :hidden, :label => false
 
                 - if section.attachments?
                   %li.input
                     %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function "Manage attachments", "$('#files-manager').load('#{edit_admin_section_translation_path(section_form_translated.object.id)}').dialog('open')", style: "padding: 5px;"
+                      %li= button_to_function "Manage attachments", "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
                 - if section.related?
                   %li.input
-                    %label Related
                     %ol{ :style => "padding-left: 275px;" }
-                      - if section_form_translated.object.related_items.any? and !section_form_translated.object.new_record?
-                        - section_form_translated.object.related_items.each do |related_item|
-                          - unless related_item.new_record?
-                            %li{"data-related-item-id" => related_item.id}
-                              .related
-                                .related-item= link_to related_item.target_title, related_item.target_url, target: '_blank'
-                        %li= button_to_function "Manage attachments", "$('#files-manager').dialog({width: 900, height: 700, title: 'File manager', modal: true}).load('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
+                      %li= button_to_function "Manage related", "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
           - else
             = ""
 
+:javascript
+  function fileManager(url){
+    $('#file-manager').html('').load(url).dialog('open');
+  }

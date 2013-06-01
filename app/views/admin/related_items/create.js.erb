@@ -1,0 +1,6 @@
+<% if resource.valid? %>
+    $('<%= j render partial: 'related_item', locals: { related_item: resource } %>').appendTo('ol#assets');
+    $('#new_related_item').replaceWith('<%= j render partial: '/admin/section_translations/related_items_form', locals: { related_item: ActiveadminSelleoCms::RelatedItem.new, section_translation: resource.relatable } %>');
+<% else %>
+    $('#new_related_item').replaceWith('<%= j render partial: '/admin/section_translations/related_items_form', locals: { related_item: resource, section_translation: resource.relatable } %>');
+<% end %>

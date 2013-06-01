@@ -29,10 +29,22 @@ ActiveAdmin.register ActiveadminSelleoCms::Section::Translation, as: 'SectionTra
   end
 
   member_action :sort_assets, :method => :post do
-    resource.assets.each do |asset|
-      asset.position = params['asset'].index(asset.id.to_s) + 1
-      asset.save
+    if params[:asset]
+      _collection = resource.assets
+      _hash = params[:asset]
+    elsif params[:related_item]
+      _collection = resource.related_items
+      _hash = params[:related_item]
+    else
+      _collection = []
+      _hash = {}
     end
+
+    _collection.each do |sortable|
+      sortable.position = _hash.index(sortable.id.to_s) + 1
+      sortable.save
+    end
+
     render nothing: true
   end
 end
