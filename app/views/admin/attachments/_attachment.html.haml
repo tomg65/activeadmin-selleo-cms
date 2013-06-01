@@ -2,4 +2,5 @@
   .attachment
     .cover-image= attachment.cover.exists? ? image_tag(attachment.cover.url, style: "max-width:100px") : image_tag("http://placehold.it/100x80&text=No%20cover", style: "max-width:100px")
     .file-name= attachment.caption.blank? ? attachment.data_file_name : attachment.caption
-    = link_to_function "Delete", "delete_asset(#{attachment.id})"
+    = link_to_function t("active_admin.cms.edit"), "edit_attachment(#{attachment.id})"
+    = link_to_function t("active_admin.cms.delete"), "delete_asset(#{attachment.id})", class: 'fltr'

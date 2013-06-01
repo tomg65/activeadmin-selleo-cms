@@ -16,21 +16,35 @@ var slug = function(str) {
     return str;
 };
 
+function fileManager(url){
+    $('#file-manager').html('').load(url, function() {
+        $(this).dialog("option", "position", ['center', 'center'] );
+    }).dialog('open');
+}
+
 function delete_asset(asset_id) {
     $.ajax({
         url: '/admin/assets/' + asset_id + '.js',
         type: 'DELETE'
     }).error(function(){
-        alert('Could not delete attachment');
+        alert('An error occured while trying to delete the asset');
     });
 }
 
-function delete_related(page_id, related_item_id) {
+function edit_attachment(attachment_id) {
+    fileManager('/admin/attachments/' + attachment_id + '/edit.js');
+}
+
+function edit_image(image_id) {
+    fileManager('/admin/images/' + image_id + '/edit.js');
+}
+
+function delete_related_item(related_item_id) {
     $.ajax({
         url: '/admin/related_items/' + related_item_id + '.js',
         type: 'DELETE'
     }).error(function(){
-        alert('Could not delete related item');
+        alert('An error occured while trying to delete the related item');
     });
 }
 

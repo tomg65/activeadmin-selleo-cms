@@ -94,3 +94,7 @@ div.ui-dialog {
 #sidebar h4 {
     margin-bottom: 0.25em;
 }
+
+.fltr {
+    float: right;
+}

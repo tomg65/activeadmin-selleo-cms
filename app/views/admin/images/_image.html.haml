@@ -2,4 +2,5 @@
   .attachment
     .cover-image= image_tag(image.data.url, style: "max-width:80px")
     .file-name= image.caption.blank? ? image.data_file_name : image.caption
-    = link_to_function "Delete", "delete_asset(#{image.id})"
+    = link_to_function t("active_admin.cms.edit"), "edit_image(#{image.id})"
+    = link_to_function "Delete", "delete_asset(#{image.id})", class: 'fltr'
