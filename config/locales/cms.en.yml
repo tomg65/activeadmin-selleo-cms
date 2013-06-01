@@ -1,6 +1,35 @@
 en:
+  activerecord:
+    attributes:
+      activeadmin_selleo_cms/image:
+        data: "Image"
+      activeadmin_selleo_cms/attachment:
+        data: "Attachment"
+        cover: "Cover image"
   active_admin:
     cms:
       view_on_site: "View on site"
       sub_pages: "Sub pages"
       edit: "Edit"
+      delete: "Delete"
+      no_sections_defined: "No sections defined"
+      navigation: "Navigation"
+      general_options: "General options"
+      metadata: "Metadata"
+      sections: "Sections"
+      save_changes: "Save changes"
+      back: "Back"
+      edit_image: "Edit image"
+      edit_attachment: "Edit attachment"
+      manage_images: "Manage images"
+      manage_attachments: "Manage attachments"
+      manage_related: "Manage related"
+      file_manager:
+        title: "File manager"
+        upload_file: "Upload file"
+        manage_files: "Manage files"
+        edit_attachment: "Edit attachment"
+        edit_image: "Edit image"
+        edit_related_item: "Edit related"
+        hint: "Hint: drag and drop files to reorder them"
+        no_cover: "No cover image"

@@ -1,13 +1,13 @@
 = semantic_form_for [:admin, @page], url: (@page.new_record? ? admin_pages_path : admin_page_path(@page.id)), html: { multipart: true } do |form|
 
   %input{name: "_change_layout", type: "hidden"}
-  - @page.initialize_missing_translations
-  - current_locale = ActiveadminSelleoCms::Locale.find_by_code(I18n.locale)
-  - @page.initialize_missing_sections
+  - @page.new_record? ? @page.initialize_missing_translations : @page.create_missing_translations
+  - current_locale = ActiveadminSelleoCms::Locale.find_by_code(I18n.default_locale)
+  - @page.create_missing_sections unless @page.new_record?
   - @section_forms = []
   -#= @page.errors.full_messages
 
-  = form.inputs general_options(@page) do
+  = form.inputs general_options(@page), id: 'id-general-options' do
     = form.input :layout_name, collection: ActiveadminSelleoCms::Layout.all.sort, include_blank: false, hint: "The form will reload on change"
     = form.input :parent_id, as: :select, collection: nested_set_options(ActiveadminSelleoCms::Page, @page) {|i| "#{'-' * i.level} #{i.title}" }
     = form.input :show_in_menu, as: :boolean
@@ -27,7 +27,7 @@
     - else
       = ""
 
-  .language-tabs
+  .language-tabs#id-meta-data
     %ul.language-selection
       %li= link_to current_locale.name, "#lang-#{current_locale.code}"
       - @page.translations.each do |translation|
@@ -49,6 +49,7 @@
     %li.cancel
       = link_to I18n.t('active_admin.cancel'), admin_pages_path
 
+%div#file-manager
 
 :javascript
   function is_link_url(){
@@ -85,4 +86,33 @@
           $(this).closest('form').find('input[name="_change_layout"]').attr('value','1');
           $(this).closest('form').submit();
         });
+
+        $('#file-manager').dialog({
+            width: 1200,
+            height: 'auto',
+            title: 'File manager',
+            modal: true,
+            autoOpen: false
+          });
     });
+
+  $(function() {
+
+      var $sidebar   = $("#sidebar"),
+          $window    = $(window),
+          offset     = $sidebar.offset(),
+          topPadding = 15;
+
+      $window.scroll(function() {
+          if ($window.scrollTop() > offset.top) {
+              $sidebar.stop().animate({
+                  marginTop: $window.scrollTop() - offset.top + topPadding
+              });
+          } else {
+              $sidebar.stop().animate({
+                  marginTop: 0
+              });
+          }
+      });
+
+  });

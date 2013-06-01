@@ -1,0 +1,11 @@
+= semantic_form_for [:admin, image], remote: true, url: admin_images_path, html: { multipart: true } do |form|
+
+  = form.inputs id: 'image_fields' do
+    = form.input :assetable_type, as: :hidden, value: section_translation.class.name
+    = form.input :assetable_id, as: :hidden, value: section_translation.id
+    = form.input :image_width, as: :hidden, value: section_translation.activeadmin_selleo_cms_section.width
+    = form.input :image_height, as: :hidden, value: section_translation.activeadmin_selleo_cms_section.height
+    = form.input :resize_method, as: :hidden, value: section_translation.activeadmin_selleo_cms_section.resize_method
+    = form.input :data
+    = form.input :caption
+  = form.actions :submit

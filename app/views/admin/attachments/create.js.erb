@@ -1,0 +1,14 @@
+<% if resource.valid? %>
+    <% if resource.assetable.activeadmin_selleo_cms_section.attachments? %>
+        $('<%= j render partial: 'attachment', locals: { attachment: resource } %>').appendTo('ol#assets');
+        $('#new_attachment').replaceWith('<%= j render partial: '/admin/section_translations/attachments_form', locals: { attachment: ActiveadminSelleoCms::Attachment.new, section_translation: resource.assetable } %>');
+    <% elsif resource.assetable.activeadmin_selleo_cms_section.attachment? %>
+        $('#file-manager').html('<%= j render partial: 'form' %>');
+    <% end %>
+<% else %>
+    <% if resource.assetable.activeadmin_selleo_cms_section.attachments? %>
+        $('#new_attachment').replaceWith('<%= j render partial: '/admin/section_translations/attachments_form', locals: { attachment: resource, section_translation: resource.assetable } %>');
+    <% elsif resource.assetable.activeadmin_selleo_cms_section.attachment? %>
+        $('#file-manager').html('<%= j render partial: 'form' %>');
+    <% end %>
+<% end %>

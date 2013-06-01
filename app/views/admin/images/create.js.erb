@@ -1,0 +1,14 @@
+<% if resource.valid? %>
+    <% if resource.assetable.images? %>
+        $('<%= j render partial: 'image', locals: { image: resource } %>').appendTo('ol#assets');
+        $('#new_image').replaceWith('<%= j render partial: '/admin/section_translations/images_form', locals: { image: ActiveadminSelleoCms::Image.new, section_translation: resource.assetable } %>');
+    <% elsif resource.assetable.activeadmin_selleo_cms_section.image? %>
+        $('#file-manager').html('<%= j render partial: 'form' %>');
+    <% end %>
+<% else %>
+    <% if resource.assetable.images? %>
+        $('#new_image').replaceWith('<%= j render partial: '/admin/section_translations/images_form', locals: { image: resource, section_translation: resource.assetable } %>');
+    <% elsif resource.assetable.activeadmin_selleo_cms_section.image? %>
+        $('#file-manager').html('<%= j render partial: 'form' %>');
+    <% end %>
+<% end %>
