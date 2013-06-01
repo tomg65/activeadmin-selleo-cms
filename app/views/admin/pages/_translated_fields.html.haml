@@ -40,7 +40,7 @@
                   %li.input
                     %label Attachment
                     %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function "Edit attachment", "$('#file-manager').load('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id }) }}').dialog('open')", style: "padding: 5px;"
+                      %li= button_to_function "Edit attachment", "$('#file-manager').load('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id }) }').dialog('open')", style: "padding: 5px;"
 
                 = section_form_translated.input :locale, :as => :hidden, :label => false
 

@@ -28,4 +28,11 @@ ActiveAdmin.register ActiveadminSelleoCms::Section::Translation, as: 'SectionTra
 
   end
 
+  member_action :sort_assets, :method => :post do
+    resource.assets.each do |asset|
+      asset.position = params['asset'].index(asset.id.to_s) + 1
+      asset.save
+    end
+    render nothing: true
+  end
 end

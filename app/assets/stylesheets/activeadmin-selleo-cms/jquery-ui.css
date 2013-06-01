@@ -485,6 +485,10 @@ li.hidden {
     padding: 0;
 }
 
+.ui-sortable-placeholder {
+    float: left;
+}
+
 /*.language-tabs.ui-widget-content {*/
     /*border: none;*/
 /*}*/

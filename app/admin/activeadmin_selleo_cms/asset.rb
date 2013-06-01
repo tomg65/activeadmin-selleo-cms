@@ -6,4 +6,4 @@ ActiveAdmin.register ActiveadminSelleoCms::Asset, { as: 'Asset' } do
     respond_to :html, :js
   end
 
-  end
+end

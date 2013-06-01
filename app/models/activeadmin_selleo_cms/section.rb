@@ -78,8 +78,9 @@ module ActiveadminSelleoCms
     class Translation
       attr_protected :id
 
-      has_many :attachments, as: :assetable, dependent: :destroy
-      has_many :images, as: :assetable, dependent: :destroy
+      has_many :assets, as: :assetable, dependent: :destroy
+      has_many :attachments, as: :assetable, dependent: :destroy, order: 'position ASC'
+      has_many :images, as: :assetable, dependent: :destroy, order: 'position ASC'
       has_one :attachment, as: :assetable, dependent: :destroy
       has_one :image, as: :assetable, dependent: :destroy
       has_many :related_items, as: :relatable, dependent: :destroy

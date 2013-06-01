@@ -1,4 +1,4 @@
-%h3{ :style => "margin: 5px 0 10px 0" } Upload new files
+%h3{ :style => "margin: 5px 0 10px 0" }= t("active_admin.cms.file_manager.upload_file")
 - if resource.activeadmin_selleo_cms_section.attachments?
   = render partial: 'attachments_form', locals: { attachment: ActiveadminSelleoCms::Attachment.new, section_translation: resource }
 - elsif resource.activeadmin_selleo_cms_section.images?
@@ -6,8 +6,8 @@
 
 %hr
 
-%h3{ :style => "margin-top: 20px" } Manage existing files
-%small Hint: drag and drop files to reorder them
+%h3{ :style => "margin-top: 20px" }= t("active_admin.cms.file_manager.manage_files")
+%small= t("active_admin.cms.file_manager.hint")
 %form
   %fieldset.inputs
     %ol#assets
@@ -15,3 +15,18 @@
         = render partial: '/admin/attachments/attachment', collection: resource.attachments
       - elsif resource.activeadmin_selleo_cms_section.images?
         = render partial: '/admin/images/image', collection: resource.images
+
+:javascript
+  $('ol#assets').sortable({
+    stop: function(event, ui) {
+      $.ajax({
+        type: 'post',
+        data: $('ol#assets').sortable('serialize'),
+        dataType: 'script',
+        success: function(request){
+          $('ol#assets').closest('fieldset').effect('highlight');
+        },
+        url: '#{sort_assets_admin_section_translation_path(resource)}'
+      })
+    }
+  });

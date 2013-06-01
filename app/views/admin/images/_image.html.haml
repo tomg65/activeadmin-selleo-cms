@@ -1,4 +1,4 @@
-%li{"data-asset-id" => image.id, :style => "float: left; max-width: 100px"}
+%li{"id" => "asset_#{image.id}", "data-asset-id" => image.id, :style => "float: left; max-width: 100px"}
   .attachment
     .cover-image= image_tag(image.data.url, style: "max-width:80px")
     .file-name= image.caption.blank? ? image.data_file_name : image.caption

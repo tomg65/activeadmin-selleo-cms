@@ -4,3 +4,8 @@ en:
       view_on_site: "View on site"
       sub_pages: "Sub pages"
       edit: "Edit"
+      file_manager:
+        title: "File manager"
+        upload_file: "Upload file"
+        manage_files: "Manage files"
+        hint: "Hint: drag and drop files to reorder them"

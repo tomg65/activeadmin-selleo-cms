@@ -3,6 +3,8 @@ module ActiveadminSelleoCms
     attr_protected :id
     attr_accessor :cover_width, :cover_height, :cover_resize_method
 
+    acts_as_list :scope => [:assetable_type, :assetable_id]
+
     belongs_to :assetable, polymorphic: true
 
     has_attached_file :cover,
