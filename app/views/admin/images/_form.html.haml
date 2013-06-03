@@ -4,7 +4,7 @@
 
   = form.inputs id: 'image_fields' do
     = form.input :data, label: "Image", hint: (resource.data.exists? ? image_tag(resource.data.url, style: "max-width:520px") : "No image")
-    = form.input :assetable_type, as: :hidden, value: resource.assetable_type
-    = form.input :assetable_id, as: :hidden, value: resource.assetable_id
+    = form.input :assetable_type, as: :hidden, input_html: { value: resource.assetable_type }
+    = form.input :assetable_id, as: :hidden, input_html: { value: resource.assetable_id }
     = form.input :caption
   = form.actions :submit

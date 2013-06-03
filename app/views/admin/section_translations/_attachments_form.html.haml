@@ -4,11 +4,11 @@
 
   = form.inputs id: 'attachment_fields' do
     = form.input :data
-    = form.input :assetable_type, as: :hidden, value: section_translation.class.name
-    = form.input :assetable_id, as: :hidden, value: section_translation.id
-    = form.input :cover_width, as: :hidden, value: section_translation.activeadmin_selleo_cms_section.cover_width
-    = form.input :cover_height, as: :hidden, value: section_translation.activeadmin_selleo_cms_section.cover_height
-    = form.input :cover_resize_method, as: :hidden, value: section_translation.activeadmin_selleo_cms_section.cover_resize_method
+    = form.input :assetable_type, as: :hidden, input_html: { value: section_translation.class.name }
+    = form.input :assetable_id, as: :hidden, input_html: { value: section_translation.id }
+    = form.input :cover_width, as: :hidden, input_html: { value: section_translation.activeadmin_selleo_cms_section.cover_width }
+    = form.input :cover_height, as: :hidden, input_html: { value: section_translation.activeadmin_selleo_cms_section.cover_height }
+    = form.input :cover_resize_method, as: :hidden, input_html: { value: section_translation.activeadmin_selleo_cms_section.cover_resize_method }
     = form.input :cover
     = form.input :caption
   = form.actions :submit

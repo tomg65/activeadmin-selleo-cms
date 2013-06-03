@@ -105,7 +105,7 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
     end
   end
 
-  sidebar I18n.t("active_admin.cms.navigation"), only: [:edit, :new] do
+  sidebar "Navigation", only: [:edit, :new] do
     h4 link_to t("active_admin.cms.general_options"), '#id-general-options'
     h4 link_to t("active_admin.cms.metadata"), '#id-meta-data'
     ol do
