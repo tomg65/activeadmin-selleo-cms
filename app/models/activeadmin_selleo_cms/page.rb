@@ -30,7 +30,7 @@ module ActiveadminSelleoCms
 
     before_validation do
       self.slug = self.title.parameterize if title and slug.blank?
-      translations.each{ |translations| set_nest(translation)}
+      translations.each{ |translation| set_nest(translation)}
     end
 
     before_save do
