@@ -27,7 +27,7 @@
                   %li.input
                     %label Image
                     %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function t("active_admin.cms.file_manager.edit_image"), "fileManager('#{section_form_translated.object.image ? edit_admin_image_path(section_form_translated.object.image.id) : new_admin_image_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id })}')", style: "padding: 5px;"
+                      %li= button_to_function t("active_admin.cms.file_manager.edit_image"), "fileManager('#{section_form_translated.object.image ? edit_admin_image_path(section_form_translated.object.image.id) : new_admin_image_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id })}')", style: "padding: 5px;"
 
                 - elsif section.images?
                   %li.input
@@ -39,7 +39,7 @@
                   %li.input
                     %label Attachment
                     %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function t("active_admin.cms.file_manager.edit_attachment"), "fileManager('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.class.name, assetable_id: section_form_translated.id }) }')", style: "padding: 5px;"
+                      %li= button_to_function t("active_admin.cms.file_manager.edit_attachment"), "fileManager('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id }) }')", style: "padding: 5px;"
 
                 = section_form_translated.input :locale, :as => :hidden, :label => false
 
