@@ -85,11 +85,11 @@ module ActiveadminSelleoCms
     end
 
     def section_names
-      @section_names ||= layout.section_names
+      layout.section_names
     end
 
     def layout
-      @layout ||= Layout.find(layout_name)
+      Layout.find(layout_name)
     end
 
     def to_param

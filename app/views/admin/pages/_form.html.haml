@@ -3,7 +3,7 @@
   %input{name: "_change_layout", type: "hidden"}
   - @page.new_record? ? @page.initialize_missing_translations : @page.create_missing_translations
   - current_locale = ActiveadminSelleoCms::Locale.find_by_code(I18n.default_locale)
-  - @page.create_missing_sections unless @page.new_record?
+  - @page.new_record? ? @page.initialize_missing_sections : @page.create_missing_sections
   - @section_forms = []
   -#= @page.errors.full_messages
 
