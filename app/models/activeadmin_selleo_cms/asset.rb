@@ -10,7 +10,7 @@ module ActiveadminSelleoCms
     has_attached_file :cover,
                       :url  => "/system/cms/covers/:id/:style_:basename.:extension",
                       :path => ":rails_root/public/system/cms/covers/:id/:style_:basename.:extension",
-                      :styles => Proc.new{ |attachment| attachment.instance.image_sizes },
+                      :styles => Proc.new{ |attachment| attachment.instance.cover_sizes },
                       :default_style => :normal
 
     validates_attachment_size :cover, :less_than => 10.megabytes
@@ -20,7 +20,7 @@ module ActiveadminSelleoCms
       data.url(format)
     end
 
-    def image_sizes
+    def cover_sizes
       { :normal => "#{cover_width || 120}x#{cover_height || 90}#{cover_resize_method || ">"}" }
     end
 

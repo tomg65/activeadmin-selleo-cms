@@ -6,6 +6,16 @@ ActiveAdmin.register ActiveadminSelleoCms::Attachment, as: 'Attachment' do
   controller do
     respond_to :html, :js
 
+    before_filter :set_styles, only: [:create, :update]
+
+    private
+
+    def set_styles
+      params[:image][:cover] = params[:image].delete :cover
+    end
+
+    public
+
     def edit
       super do |format|
         format.html { render action: :edit, layout: false }
