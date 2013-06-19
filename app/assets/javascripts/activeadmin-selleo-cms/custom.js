@@ -57,7 +57,6 @@ function delete_related_item(related_item_id) {
 }
 
 function update_positions(pagesArray) {
-    $('.update-positions-button').attr('disabled', true).attr('value', 'Saving...')
     $.ajax({
         url: '/admin/pages/update_positions.js',
         data: { 'page_ids': pagesArray },

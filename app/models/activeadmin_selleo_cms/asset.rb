@@ -14,7 +14,7 @@ module ActiveadminSelleoCms
                       :default_style => :normal
 
     validates_attachment_size :cover, :less_than => 10.megabytes
-    validates_presence_of :assetable
+    #validates_presence_of :assetable
 
     def url(format=nil)
       data.url(format)

@@ -3,4 +3,10 @@
     %li.ui-state-default{'data-id' => page.id}
       %span.ui-icon.ui-icon-arrowthick-2-n-s
       = page
-= button_to_function "Save", "update_positions( $('.sortable').sortable( 'toArray', { attribute: 'data-id' } ))", class: 'update-positions-button'
+
+:javascript
+  $('.sortable').sortable({
+    update: function( event, ui ) {
+      update_positions( $('.sortable').sortable( 'toArray', { attribute: 'data-id' } ));
+    }
+  });

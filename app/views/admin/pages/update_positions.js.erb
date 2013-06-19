@@ -1,5 +1,5 @@
 <% if ActiveadminSelleoCms::Page.update_positions(params[:page_ids]) %>
-    alert('Changes saved');
+    $('#wrapper').effect('highlight');
 <% else %>
     alert('An error has occured. Changes are NOT saved');
 <% end %>

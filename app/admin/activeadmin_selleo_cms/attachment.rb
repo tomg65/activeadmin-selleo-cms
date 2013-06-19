@@ -11,7 +11,7 @@ ActiveAdmin.register ActiveadminSelleoCms::Attachment, as: 'Attachment' do
     private
 
     def set_styles
-      params[:image][:cover] = params[:image].delete :cover
+      params[:attachment][:cover] = params[:attachment].delete :cover
     end
 
     public
