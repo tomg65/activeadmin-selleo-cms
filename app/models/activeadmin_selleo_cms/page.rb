@@ -77,7 +77,7 @@ module ActiveadminSelleoCms
     end
 
     def to_s
-      title
+      translations.with_locale(I18n.default_locale).first.title
     end
 
     def to_label
@@ -92,27 +92,19 @@ module ActiveadminSelleoCms
       Layout.find(layout_name)
     end
 
-    def to_param
-      parent ? "#{parent.to_param}/#{slug}" : slug
-    end
-
     def roots
       Page.published.roots
-    end
-
-    def breadcrumb
-      self_and_ancestors.map{|p| p.translated_attribute(:title, I18n.default_locale)}.join(' &raquo; ').html_safe
     end
 
     def url(options={locale: true})
       _url = if is_link_url
         link_url
       elsif redirect_to_first_sub_page and children.published.any?
-        "/:locale/#{children.published.first.to_param}"
+        "/#{children.published.first.url}"
       else
-        "/:locale/#{to_param}"
+        "/#{to_slug}"
       end
-      _url = _url.gsub(':locale', I18n.locale.to_s) if _url.match(/:locale/) and options[:locale]
+      _url = "/#{I18n.locale.to_s}#{_url}" if options[:locale]
       _url
     end
 
@@ -135,6 +127,22 @@ module ActiveadminSelleoCms
       elsif parent
         parent.go_back_page
       end
+    end
+
+    def method_missing(sym, *args)
+      if section = sections.with_name(sym).first #and section_translation = section.translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).first
+        section
+      elsif section_names.include?(sym.to_s)
+        "Empty section"
+      end
+    end
+
+    def to_slug
+      parent ? "#{parent.to_slug}/#{slug}" : slug
+    end
+
+    def breadcrumb
+      self_and_ancestors.map{|p| p.translated_attribute(:title, I18n.default_locale)}.join(' &raquo; ').html_safe
     end
 
     class Translation

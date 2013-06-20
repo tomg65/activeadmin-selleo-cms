@@ -1,16 +1,8 @@
 module PagesHelper
-  def link_to_locale(link_name, locale, page=nil)
-    if page
-      link_to link_name, with_host(url_to_page(page, locale.to_s))
-    elsif request.fullpath.match(/^\/\w{2}\/.*/)
-      link_to link_name, with_host(request.fullpath.gsub(/^\/(\w{2})\//, "/#{locale.code}/"))
-    else
-      link_to link_name, with_host("/#{locale.code}")
-    end
-  end
 
   def with_host(relative_path)
-    relative_path.match(/http/) ? relative_path : "#{request.protocol}#{request.host_with_port}#{relative_path}"
+    host = ActiveadminSelleoCms::Locale.enabled.find_by_code(I18n.locale).domain || request.host
+    relative_path.match(/http/) ? relative_path : "#{request.protocol}#{host}:#{request.port}#{relative_path}"
   end
 
   def link_to_search_result(result)
@@ -22,14 +14,10 @@ module PagesHelper
   def url_to_page(page, locale=I18n.locale)
     return "#" unless page
     _locale = I18n.locale
-    I18n.locale = locale
-    _url = with_host(page.url)
+    I18n.locale = locale.to_s
+    _url = with_host(page.url(locale: ActiveadminSelleoCms::Locale.enabled.find_by_code(I18n.locale).domain.blank?))
     I18n.locale = _locale
     return _url
-  end
-
-  def link_to_page(page, link_name=nil, options={})
-    link_to (link_name || page.title), with_host(page.url), options
   end
 
   def s(name)
@@ -50,7 +38,7 @@ module PagesHelper
         if block_given?
           concat(content_tag :li, yield(page), class: classes)
         else
-          concat(content_tag :li, link_to_page(page), class: classes)
+          concat(content_tag :li, url_to_page(page), class: classes)
         end
       }
     end
@@ -68,13 +56,17 @@ module PagesHelper
         if block_given?
           concat(content_tag :li, yield(locale), class: classes)
         else
-          concat(content_tag :li, link_to_locale(locale.code.to_s.upcase, locale, @page), class: classes)
+          concat(content_tag :li, url_to_page(@page, locale), class: classes)
         end
       }
     end
   end
 
   def root
-    page_path(I18n.locale, ActiveadminSelleoCms::Page.root)
+    ActiveadminSelleoCms::Page.root
+  end
+
+  def domain_based_locale?
+    request.env[:locale].present?
   end
 end

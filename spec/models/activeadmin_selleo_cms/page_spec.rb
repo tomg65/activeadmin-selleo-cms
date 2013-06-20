@@ -45,11 +45,11 @@ module ActiveadminSelleoCms
 
     it "should retrun nested path" do
       parent = FactoryGirl.create(:page, title: 'Parent')
-      parent.to_param.should == "parent"
+      parent.to_slug.should == "parent"
       child = FactoryGirl.create(:page, title: 'Child', parent: parent)
-      child.to_param.should == "parent/child"
+      child.to_slug.should == "parent/child"
       grand = FactoryGirl.create(:page, title: 'Grand', parent: child)
-      grand.to_param.should == "parent/child/grand"
+      grand.to_slug.should == "parent/child/grand"
     end
 
     it "should not be possible to create 2 pages with the same title for same parent" do

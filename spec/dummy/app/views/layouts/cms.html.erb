@@ -10,7 +10,7 @@
 
 <ul>
   <% @page.roots.each do |root| %>
-    <%= link_to_page root %>
+      <%= link_to root.title, url_to_page(root) %>
   <% end %>
 </ul>
 

@@ -37,13 +37,16 @@ module ActiveadminSelleoCms
     end
 
     class Section
-      attr_accessor :name, :type, :toolbar, :width, :height, :resize_method, :cover_width, :cover_height, :cover_resize_method
+      attr_accessor :name, :type, :toolbar, :width, :height, :resize_method, :cover_width, :cover_height,
+                    :cover_resize_method, :thumb_width, :thumb_height, :thumb_resize_method
 
       def initialize(node)
         @name                 = node.attributes["name"].content
         @type                 = node.attributes["data-type"] ? node.attributes["data-type"].content : 'ckeditor'
         @attachments          = node.attributes["data-attachments"].present?
         @attachment           = node.attributes["data-attachment"].present?
+        @images               = node.attributes["data-images"].present?
+        @image                = node.attributes["data-image"].present?
         @related              = node.attributes["data-related"].present?
         @toolbar              = node.attributes["data-toolbar"] ? node.attributes["data-toolbar"].content : 'Minimal'
         @width                = node.attributes["data-width"] ? node.attributes["data-width"].content : 640
@@ -52,6 +55,9 @@ module ActiveadminSelleoCms
         @cover_width          = node.attributes["data-cover-width"] ? node.attributes["data-cover-width"].content : 140
         @cover_height         = node.attributes["data-cover-height"] ? node.attributes["data-cover-height"].content : 199
         @cover_resize_method  = node.attributes["data-cover-resize-method"] ? node.attributes["data-cover-resize-method"].content : ">"
+        @thumb_width          = node.attributes["data-thumb_width"] ? node.attributes["data-thumb_width"].content : 160
+        @thumb_height         = node.attributes["data-thumb-height"] ? node.attributes["data-thumb-height"].content : 120
+        @thumb_resize_method  = node.attributes["data-thumb-resize-method"] ? node.attributes["data-thumb-resize-method"].content : ">"
       end
 
       def text?
@@ -59,11 +65,11 @@ module ActiveadminSelleoCms
       end
 
       def image?
-        ['image'].include? @type.downcase
+        ['image'].include?(@type.downcase) or @image
       end
 
       def images?
-        ['images'].include? @type.downcase
+        ['images'].include?(@type.downcase) or @images
       end
 
       def attachments?

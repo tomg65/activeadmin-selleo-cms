@@ -1,4 +1,6 @@
 class PagesController < CmsController
+  include PagesHelper
+
   before_filter :find_page, only: :show
 
   private
@@ -16,12 +18,12 @@ class PagesController < CmsController
       end
     end
 
-    @page = ActiveadminSelleoCms::Page.find_by_id(page_id)
+    @page = ActiveadminSelleoCms::Page.find_by_id(page_id) || root
 
-    if !@page or (!@page.is_published? and @page != root)
-      redirect_to page_path(I18n.locale, root)
+    if !@page.is_published? and @page != root
+      redirect_to url_to_page(root)
     elsif @page.redirect_to_first_sub_page
-      redirect_to page_path(I18n.locale, @page.children.first || root)
+      redirect_to url_to_page(@page.children.first || root)
     elsif @page.is_link_url
       redirect_to @page.link_url
     end
@@ -36,7 +38,7 @@ class PagesController < CmsController
 
   def index
     respond_to do |format|
-      format.html { redirect_to page_path(I18n.locale, ActiveadminSelleoCms::Page.root) }
+      format.html { redirect_to url_to_page(ActiveadminSelleoCms::Page.root) }
       format.json
     end
   end

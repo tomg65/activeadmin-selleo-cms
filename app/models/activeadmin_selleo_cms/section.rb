@@ -29,7 +29,7 @@ module ActiveadminSelleoCms
     end
 
     def image
-      @image ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.image}
+      @image ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.image}
         current_translation.image
       else
         nil
@@ -37,7 +37,7 @@ module ActiveadminSelleoCms
     end
 
     def attachment
-      @attachment ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.attachment}
+      @attachment ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.attachment}
         current_translation.attachment
       else
         nil
@@ -45,8 +45,16 @@ module ActiveadminSelleoCms
     end
 
     def images
-      @images ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.images.any? }
+      @images ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.images.any? }
         current_translation.images
+      else
+        []
+      end
+    end
+
+    def attachments
+      @images ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.attachments.any? }
+        current_translation.attachments
       else
         []
       end
@@ -75,8 +83,16 @@ module ActiveadminSelleoCms
       end
     end
 
+    def section_definition
+      @section_definition ||= if sectionable and sectionable.respond_to? :layout
+        sectionable.layout.find_section(name)
+      end
+    end
+
     class Translation
       attr_protected :id
+
+      belongs_to :activeadmin_selleo_cms_section, class_name: 'ActiveadminSelleoCms::Section'
 
       has_many :assets, as: :assetable, dependent: :destroy
       has_many :attachments, as: :assetable, dependent: :destroy, order: 'position ASC'
@@ -90,6 +106,12 @@ module ActiveadminSelleoCms
       accepts_nested_attributes_for :image, reject_if: lambda{ |i| i[:data].blank? and i[:caption].blank? }
       accepts_nested_attributes_for :images, reject_if: lambda{ |i| i[:data].blank? }
       accepts_nested_attributes_for :related_items, reject_if: lambda{ |ri| ri[:related_url].blank? and ri[:page_id].blank? }
+
+      scope :order_by_locales, ->(locales){ order("position(locale in ('#{locales.join}')::varchar)") }
+
+      def to_s
+        body.to_s.html_safe
+      end
     end
   end
 end
