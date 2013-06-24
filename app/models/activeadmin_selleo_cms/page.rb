@@ -100,11 +100,11 @@ module ActiveadminSelleoCms
       _url = if is_link_url
         link_url
       elsif redirect_to_first_sub_page and children.published.any?
-        "/#{children.published.first.url}"
+        "/#{children.published.first.to_slug}"
       else
         "/#{to_slug}"
       end
-      _url = "/#{I18n.locale.to_s}#{_url}" if options[:locale]
+      _url = "/#{I18n.locale.to_s}#{_url}" if !is_link_url and options[:locale]
       _url
     end
 
