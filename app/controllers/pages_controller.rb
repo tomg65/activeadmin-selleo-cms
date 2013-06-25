@@ -22,6 +22,8 @@ class PagesController < CmsController
       redirect_to page_path(I18n.locale, root)
     elsif @page.redirect_to_first_sub_page
       redirect_to page_path(I18n.locale, @page.children.first || root)
+    elsif @page.is_link_url
+      redirect_to @page.link_url
     end
   end
 
@@ -35,7 +37,7 @@ class PagesController < CmsController
   def index
     respond_to do |format|
       format.html { redirect_to page_path(I18n.locale, ActiveadminSelleoCms::Page.root) }
-      format.json { render text: ActiveadminSelleoCms::Page.published.reorder("lft ASC").map{|p| [p.to_label, p.url(locale: false)]}.to_json }
+      format.json
     end
   end
 end

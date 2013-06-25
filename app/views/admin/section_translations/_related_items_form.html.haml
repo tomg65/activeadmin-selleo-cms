@@ -1,0 +1,10 @@
+= semantic_form_for [:admin, related_item], remote: true, url: admin_related_items_path(format: :js), html: { multipart: true } do |form|
+
+  -#= @page.errors.full_messages
+
+  = form.inputs id: 'related_item_fields' do
+    = form.input :related_url
+    = form.input :title
+    = form.input :relatable_type, as: :hidden, input_html: { value: section_translation.class.name }
+    = form.input :relatable_id, as: :hidden, input_html: { value: section_translation.id }
+  = form.actions :submit

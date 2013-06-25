@@ -25,12 +25,12 @@ module ActiveadminSelleoCms
     scope :latest, ->(n) { published.reorder("published_at DESC").limit(n) }
     scope :most_read, ->(n) { published.reorder("views DESC").limit(n) }
     scope :with_layout, ->(layout_name) { where(layout_name: layout_name) }
-    scope :with_setting_value, ->(key, value) { where("activeadmin_selleo_cms_pages.settings ~ '#{key}:\\s?\\W?#{value}\\W?\\s*$'") }
+    scope :with_setting_value, ->(key, value) { where("activeadmin_selleo_cms_pages.settings ~ '#{key}:\\s?\\W?#{value}\\W?\\s'") }
     scope :with_setting, ->(key) { where("activeadmin_selleo_cms_pages.settings ~ '#{key}:\\s?'") }
 
     before_validation do
       self.slug = self.title.parameterize if title and slug.blank?
-      translations.each{ |translations| set_nest(translation)}
+      translations.each{ |translation| set_nest(translation)}
     end
 
     before_save do
@@ -70,6 +70,12 @@ module ActiveadminSelleoCms
       end
     end
 
+    def create_missing_sections
+      section_names.each do |section_name|
+        sections.create(name: section_name) unless sections.detect{|section| section.name == section_name}
+      end
+    end
+
     def to_s
       title
     end
@@ -79,11 +85,11 @@ module ActiveadminSelleoCms
     end
 
     def section_names
-      @section_names ||= layout.section_names
+      layout.section_names
     end
 
     def layout
-      @layout ||= Layout.find(layout_name)
+      Layout.find(layout_name)
     end
 
     def to_param
@@ -95,7 +101,7 @@ module ActiveadminSelleoCms
     end
 
     def breadcrumb
-      self_and_ancestors.map(&:title).join(' &raquo; ').html_safe
+      self_and_ancestors.map{|p| p.translated_attribute(:title, I18n.default_locale)}.join(' &raquo; ').html_safe
     end
 
     def url(options={locale: true})
@@ -123,17 +129,21 @@ module ActiveadminSelleoCms
       end
     end
 
-    #def method_missing(sym, *args)
-    #  sections.with_name(sym).first
-    #end
+    def go_back_page
+      if parent and !parent.redirect_to_first_sub_page
+        parent
+      elsif parent
+        parent.go_back_page
+      end
+    end
 
     class Translation
       attr_protected :id
 
       belongs_to :activeadmin_selleo_cms_page, class_name: 'ActiveadminSelleoCms::Page'
 
-      validates :title, presence: true, if: ->(translation){ translation.locale.eql? I18n.locale }
-      validates :slug, presence: true, format: { with: /^[a-z0-9\-_]+$/i }, if: ->(translation) { translation.locale.eql? I18n.locale }
+      validates :title, presence: true, if: ->(translation){ translation.locale.eql? I18n.default_locale }
+      validates :slug, presence: true, format: { with: /^[a-z0-9\-_]+$/i }, if: ->(translation) { translation.locale.eql? I18n.default_locale }
       validate do |translation|
         if slug.present? and translation.class.joins(:activeadmin_selleo_cms_page).
             where(locale: locale, slug: slug, activeadmin_selleo_cms_pages: { parent_id: activeadmin_selleo_cms_page.parent_id }).all.reject{|p| p == self}.any?

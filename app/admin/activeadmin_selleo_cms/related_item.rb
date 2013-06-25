@@ -6,4 +6,4 @@ ActiveAdmin.register ActiveadminSelleoCms::RelatedItem, { as: 'RelatedItem' } do
     respond_to :html, :js
   end
 
-  end
+end

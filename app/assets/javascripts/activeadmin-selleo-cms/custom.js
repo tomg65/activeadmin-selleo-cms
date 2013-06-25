@@ -16,26 +16,47 @@ var slug = function(str) {
     return str;
 };
 
-function delete_asset(page_id, asset_id) {
-    $.ajax({
-        url: '/admin/assets/' + asset_id + '.js',
-        type: 'DELETE'
-    }).error(function(){
-        alert('Could not delete attachment');
-    });
+function fileManager(url){
+    $('#file-manager').html('').load(url, function() {
+        $(this).dialog("option", "position", ['center', 'center'] );
+    }).dialog('open');
 }
 
-function delete_related(page_id, related_item_id) {
-    $.ajax({
-        url: '/admin/related_items/' + related_item_id + '.js',
-        type: 'DELETE'
-    }).error(function(){
-        alert('Could not delete related item');
-    });
+function delete_asset(asset_id) {
+    if(confirm('Are you sure?')) {
+        $.ajax({
+            url: '/admin/assets/' + asset_id + '.js',
+            type: 'DELETE'
+        }).error(function(){
+            alert('An error occured while trying to delete the asset');
+        });
+    }
+}
+
+function edit_attachment(attachment_id) {
+    fileManager('/admin/attachments/' + attachment_id + '/edit.js');
+}
+
+function edit_image(image_id) {
+    fileManager('/admin/images/' + image_id + '/edit.js');
+}
+
+function edit_related_item(related_item_id) {
+    fileManager('/admin/related_items/' + related_item_id + '/edit.js');
+}
+
+function delete_related_item(related_item_id) {
+    if(confirm('Are you sure?')) {
+        $.ajax({
+            url: '/admin/related_items/' + related_item_id + '.js',
+            type: 'DELETE'
+        }).error(function(){
+                alert('An error occured while trying to delete the related item');
+            });
+    }
 }
 
 function update_positions(pagesArray) {
-    $('.update-positions-button').attr('disabled', true).attr('value', 'Saving...')
     $.ajax({
         url: '/admin/pages/update_positions.js',
         data: { 'page_ids': pagesArray },
@@ -85,8 +106,6 @@ $(function(){
       $(this).closest('fieldset').find('ol').toggle();
     });
 
-//    $('i.folded').click();
-
     $('input[multiple]').each(function(){
         $(this).attr('name', $(this).attr('name').replace(/\[\]$/, '') );
     });
@@ -95,3 +114,15 @@ $(function(){
     $( ".sortable" ).disableSelection();
 
 });
+
+function savePage(){
+    form = $('form[id*="_page_"]');
+    $.ajax( {
+        type: "POST",
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(resp) {
+            $('body').effect('highlight')
+        }
+    } );
+}

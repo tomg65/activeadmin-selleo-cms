@@ -1,0 +1,6 @@
+<h3 class="upload-file">
+  <%= t("active_admin.cms.file_manager.edit_related_item") %>
+  <%= link_to_function t("active_admin.cms.back"), "fileManager('#{edit_admin_section_translation_path(resource.relatable.id)}')", class: "fltr" %>
+</h3>
+
+  <%= render partial: 'form' %>
