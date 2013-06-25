@@ -21,7 +21,7 @@
 
               %ol
                 - if section.text?
-                  = section_form_translated.input :body, as: section.type, label: "Content", input_html: { toolbar: section.toolbar }
+                  = section_form_translated.input :body, as: section.type, label: "Content", label: false, input_html: { ckeditor: { toolbar: section.toolbar } }
 
                 = section_form_translated.input :locale, :as => :hidden, :label => false
 
