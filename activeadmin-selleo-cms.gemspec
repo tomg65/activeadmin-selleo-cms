@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "jquery-rails", "~> 2.2.1"
   s.add_dependency "activeadmin", "~> 0.6.0"
   s.add_dependency "globalize3", "~> 0.3.0"
-  s.add_dependency "ckeditor", "4.0.2"
+  s.add_dependency "ckeditor", "4.0.4"
   s.add_dependency "paperclip"
   s.add_dependency "language_list"
   s.add_dependency "haml", "3.1.8"

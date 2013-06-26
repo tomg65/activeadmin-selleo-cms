@@ -1,0 +1,5 @@
+<% if resource.valid? %>
+    $('section[data-id="<%= resource.id %>"]').effect('highlight');
+<% else %>
+    alert('Error!');
+<% end %>

@@ -137,6 +137,10 @@ module ActiveadminSelleoCms
       end
     end
 
+    def method_missing(sym, *args)
+      sections.with_name(sym.to_s).first
+    end
+
     class Translation
       attr_protected :id
 

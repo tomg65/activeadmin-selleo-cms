@@ -27,8 +27,8 @@ ActiveAdmin.register ActiveadminSelleoCms::Section, as: "Section", sort_order: "
 
     def create
       create! do |success, failure|
-        success.html { redirect_to admin_sections_path  }
-        failure.html { render action: :new  }
+        success.html  { redirect_to admin_sections_path  }
+        failure.html  { render action: :new  }
       end
     end
 
