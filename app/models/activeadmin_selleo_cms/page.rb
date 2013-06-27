@@ -41,6 +41,7 @@ module ActiveadminSelleoCms
 
     after_initialize do
       self.layout_name = Layout.all.first if (new_record? and layout_name.blank?) or (read_attribute(:layout_name) and !layout)
+      create_missing_sections
     end
 
     after_initialize do
