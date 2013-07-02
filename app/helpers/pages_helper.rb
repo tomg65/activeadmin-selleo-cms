@@ -77,4 +77,8 @@ module PagesHelper
   def root
     page_path(I18n.locale, ActiveadminSelleoCms::Page.root)
   end
+
+  def switch_editing
+    params[:editing] ? request.url.sub(/\?editing=[^&]*/, '?').sub(/\&editing=[^&]*/, '').sub(/\?$/,'') : request.url+'?editing=true'
+  end
 end

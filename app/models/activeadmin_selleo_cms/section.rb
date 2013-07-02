@@ -28,28 +28,28 @@ module ActiveadminSelleoCms
       end
     end
 
+    def current_translation
+      translations.with_locales(I18n.fallbacks[I18n.locale]).first
+    end
+
     def image
-      @image ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.image}
-        current_translation.image
-      else
-        nil
-      end
+      current_translation.image
     end
 
     def attachment
-      @attachment ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.attachment}
-        current_translation.attachment
-      else
-        nil
-      end
+      current_translation.attachment
+    end
+
+    def attachments
+      current_translation.attachments
     end
 
     def images
-      @images ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.images.any? }
-        current_translation.images
-      else
-        []
-      end
+      current_translation.images
+    end
+
+    def related_items
+      current_translation.related_items
     end
 
     def to_s
