@@ -15,7 +15,7 @@ ActiveAdmin.register ActiveadminSelleoCms::Image, as: 'Image' do
     private
 
     def set_styles
-      params[:image][:data] = params[:image].delete :data
+      params[:image][:data] = params[:image].delete :data if params[:image][:data]
     end
 
     public
