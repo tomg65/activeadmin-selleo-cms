@@ -6,7 +6,8 @@ module ActiveadminSelleoCms
                       :url  => "/system/cms/images/:id/:style_:basename.:extension",
                       :path => ":rails_root/public/system/cms/images/:id/:style_:basename.:extension",
                       :styles => Proc.new{ |attachment| attachment.instance.image_sizes },
-                      :default_style => :normal
+                      :default_style => :normal,
+                      :processors => [:cropper]
 
     validates_attachment_size :data, :less_than => 1.megabytes
     validates_attachment_presence :data
