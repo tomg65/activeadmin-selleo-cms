@@ -11,15 +11,19 @@ module Paperclip
     end
 
     def transformation_command
-      crop_command = [
-          "-crop",
-          "#{target.crop_w}x" \
-          "#{target.crop_h}+" \
-          "#{target.crop_x}+" \
-          "#{target.crop_y}",
-          "+repage"
-      ]
-      crop_command + super
+      if @attachment.instance.cropping?
+        crop_command = [
+            "-crop",
+            "#{target.crop_w}x" \
+            "#{target.crop_h}+" \
+            "#{target.crop_x}+" \
+            "#{target.crop_y}",
+            "+repage"
+        ]
+        crop_command + super
+      else
+        super
+      end
     end
   end
 end
