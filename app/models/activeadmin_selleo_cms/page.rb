@@ -40,8 +40,10 @@ module ActiveadminSelleoCms
     end
 
     after_initialize do
-      self.layout_name = Layout.all.first if (new_record? and layout_name.blank?) or (read_attribute(:layout_name) and !layout)
-      create_missing_sections
+      if attributes.keys.include?("layout_name")
+        self.layout_name = Layout.all.first if (new_record? and layout_name.blank?) or (read_attribute(:layout_name) and !layout)
+        create_missing_sections unless new_record?
+      end
     end
 
     after_initialize do
@@ -82,7 +84,7 @@ module ActiveadminSelleoCms
     end
 
     def to_label
-      "#{'- ' * depth} #{title}"
+      "#{'- ' * depth.to_i} #{title}"
     end
 
     def section_names
