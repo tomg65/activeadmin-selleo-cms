@@ -22,6 +22,18 @@ function fileManager(url){
     }).dialog('open');
 }
 
+function cropImage(asset_id, width, height) {
+    $('#file-manager').html('').load('/admin/images/'+asset_id+'/crop.js', function() {
+        $(this).dialog("option", "position", ['center', 'center'] );
+        $(this).find('img').Jcrop({
+            minSize: [ width, height ],
+            aspectRatio: width/height,
+            allowMove: true,
+            allowResize: true
+        });
+    }).dialog('open');
+}
+
 function delete_asset(asset_id) {
     if(confirm('Are you sure?')) {
         $.ajax({

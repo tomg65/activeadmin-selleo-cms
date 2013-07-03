@@ -3,6 +3,10 @@ ActiveAdmin.register ActiveadminSelleoCms::Image, as: 'Image' do
 
   form :partial => "form"
 
+  member_action :crop, :method => :get do
+    @image = ActiveadminSelleoCms::Image.find(params[:id])
+  end
+
   controller do
     respond_to :html, :js
 

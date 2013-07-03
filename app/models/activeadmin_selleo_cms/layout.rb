@@ -48,7 +48,7 @@ module ActiveadminSelleoCms
         @toolbar              = node.attributes["data-toolbar"] ? node.attributes["data-toolbar"].content : 'Minimal'
         @width                = node.attributes["data-width"] ? node.attributes["data-width"].content : 640
         @height               = node.attributes["data-height"] ? node.attributes["data-height"].content : 480
-        @resize_method        = node.attributes["data-resize-method"] ? node.attributes["data-resize-method"].content : "#"
+        @resize_method        = node.attributes["data-resize-method"] ? node.attributes["data-resize-method"].content : ">"
         @cover_width          = node.attributes["data-cover-width"] ? node.attributes["data-cover-width"].content : 140
         @cover_height         = node.attributes["data-cover-height"] ? node.attributes["data-cover-height"].content : 199
         @cover_resize_method  = node.attributes["data-cover-resize-method"] ? node.attributes["data-cover-resize-method"].content : ">"
