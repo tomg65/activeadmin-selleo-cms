@@ -11,3 +11,4 @@
     = form.input :data, label: "Image", hint: (resource.data.exists? ? image_tag(resource.data.url, style: "max-width:520px") : "No image")
     = form.input :caption
   = form.actions :submit
+  = link_to_function "Crop image", "cropImage(#{resource.id}, #{resource.assetable.activeadmin_selleo_cms_section.width}, #{resource.assetable.activeadmin_selleo_cms_section.height})" unless resource.data.blank?

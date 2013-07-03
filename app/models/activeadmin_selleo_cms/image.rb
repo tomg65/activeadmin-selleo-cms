@@ -26,7 +26,8 @@ module ActiveadminSelleoCms
     private
 
     def reprocess_image
-      #data.reprocess!
+      data.assign(data)
+      data.save
     end
 
   end
