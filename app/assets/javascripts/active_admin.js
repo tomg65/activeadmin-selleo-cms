@@ -6,3 +6,4 @@
 //= require 'jquery.iframe-transport.js'
 //= require 'jquery.remotipart.js'
 //= require 'activeadmin-selleo-cms/jquery.Jcrop'
+//= require jquery.ui.effect-highlight

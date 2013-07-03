@@ -13,8 +13,20 @@ module ActiveadminSelleoCms
 
     attr_protected :id
 
+    after_update :reprocess_image, :if => :cropping?
+
+    def cropping?
+      !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+    end
+
     def image_sizes
       { :normal => "#{image_width || 640}x#{image_height || 480}#{resize_method || ">"}" }
+    end
+
+    private
+
+    def reprocess_image
+      data.reprocess!
     end
 
   end
