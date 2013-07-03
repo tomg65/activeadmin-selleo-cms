@@ -92,7 +92,10 @@
             height: 'auto',
             title: 'File manager',
             modal: true,
-            autoOpen: false
+            autoOpen: false,
+            resize: function( event, ui ) {
+              $(this).dialog("option", "position", ['center', 'center'] );
+            }
           });
     });
 

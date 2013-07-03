@@ -22,6 +22,13 @@ function fileManager(url){
     }).dialog('open');
 }
 
+function updateCrop(coords) {
+    $('#image_crop_x').val(coords.x);
+    $('#image_crop_y').val(coords.y);
+    $('#image_crop_w').val(coords.w);
+    $('#image_crop_h').val(coords.h);
+}
+
 function cropImage(asset_id, width, height) {
     $('#file-manager').html('').load('/admin/images/'+asset_id+'/crop.js', function() {
         $(this).dialog("option", "position", ['center', 'center'] );
@@ -29,7 +36,10 @@ function cropImage(asset_id, width, height) {
             minSize: [ width, height ],
             aspectRatio: width/height,
             allowMove: true,
-            allowResize: true
+            allowResize: true,
+            onChange: updateCrop,
+            onSelect: updateCrop,
+            setSelect: [0, 0, width, height]
         });
     }).dialog('open');
 }
