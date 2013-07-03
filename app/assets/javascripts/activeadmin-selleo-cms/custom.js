@@ -44,6 +44,12 @@ function cropImage(asset_id, width, height) {
     }).dialog('open');
 }
 
+function editPage(page_id) {
+    $('#file-manager').html('').load('/admin/pages/'+page_id+'/edit.js', function() {
+        $(this).dialog("option", "position", ['center', 'center'] );
+    }).dialog('open');
+}
+
 function delete_asset(asset_id) {
     if(confirm('Are you sure?')) {
         $.ajax({
