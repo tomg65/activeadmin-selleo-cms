@@ -1,0 +1,6 @@
+<%= semantic_form_for :form, url: '/forms' do |f| %>
+    <% form.questions.each do |question| %>
+        <%= f.input question.title, as: question.input_type %>
+    <% end %>
+    <%= f.actions %>
+<% end %>

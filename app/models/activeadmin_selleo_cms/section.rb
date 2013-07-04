@@ -52,11 +52,30 @@ module ActiveadminSelleoCms
       current_translation.related_items
     end
 
+    def render(editing=false)
+      doc = Nokogiri::HTML(body.to_s)
+
+      unless editing
+        av = ActionView::Base.new
+        av.instance_eval do
+          def protect_against_forgery?
+            false
+          end
+        end
+
+        doc.css('form[data-form-id]').each do |form|
+          form.replace av.render(:file => File.join(ActiveadminSelleoCms::Engine.root, 'app/views/pages/_form'), :layout => nil, :locals => { :form => Form.find(form.attributes["data-form-id"].to_s) })
+        end
+      end
+
+      doc.to_s.html_safe
+    end
+
     def to_s
       section_definition = sectionable.layout.find_section(name) if sectionable and sectionable.respond_to? :layout
       if section_definition
         if section_definition.text?
-          body.to_s.html_safe
+          render_body
         elsif section_definition.image?
           image ? image.url : ""
         end

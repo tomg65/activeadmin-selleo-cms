@@ -5,10 +5,10 @@
 //= require jquery.iframe-transport.js
 //= require jquery.remotipart.js
 //= require ckeditor/init
-//= require ckeditor/plugins/inlinesave/plugin
 //= require ckeditor/toolbars
 //= require activeadmin-selleo-cms/custom
 //= require activeadmin-selleo-cms/jquery-ui-timepicker-addon
 //= require activeadmin-selleo-cms/jquery.Jcrop
+//= require jquery.ui.dialog
 //= require jquery.ui.effect-highlight
 //= require jquery.ui.tabs

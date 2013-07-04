@@ -154,3 +154,22 @@ function savePage(){
         }
     } );
 }
+
+$(function(){
+    if (EDITING == true) {
+        $('section').addClass("editing");
+        $('#file-manager').dialog({
+            width: 'auto',
+            height: 'auto',
+            title: 'CMS Editor',
+            modal: true,
+            autoOpen: false,
+            resize: function( event, ui ) {
+                $(this).dialog("option", "position", ['center', 'center'] );
+            },
+            beforeClose: function() {
+                window.location = window.location;
+            }
+        });
+    }
+});
