@@ -1,0 +1,50 @@
+= semantic_form_for [:admin, @form], url: admin_form_path(@form) do |form|
+  = form.inputs "General options" do
+    = form.input :title
+
+  %ol.draggable_questions_container
+    - ActiveadminSelleoCms::FormQuestion::TYPES.each do |qtype|
+      = render partial: "question_type", locals: { qtype: qtype }
+
+  %ol.form_questions_container.sortable
+    = render partial: "questions", locals: { questions: @form.questions }
+
+  = form.actions class: "actions clear" do
+    = form.action :submit
+    %li.cancel
+      = link_to I18n.t('active_admin.cancel'), admin_forms_path
+
+#question_container
+
+:javascript
+  $(function(){
+      $("ol.form_questions_container").sortable({
+          update: function(event, ui) {
+             sort();
+          },
+
+          receive:function (event, ui) {
+             $('#question_container').load("#{new_admin_form_form_question_url(@form)}?question_type="+$(ui.helper).attr("data-qtype")).dialog({modal:true, closeOnEscape: false});
+          }
+      }).disableSelection();
+
+      $("li.draggable_question_type").draggable({
+      connectToSortable:"ol.form_questions_container",
+      helper:"clone",
+      revert:"invalid",
+      opacity:.8
+    });
+  });
+
+  function sort(){
+    $.ajax({url: "#{sort_admin_form_form_questions_url(@form)}?ids="+$.map($('ol.form_questions_container li'),function(obj){return $(obj).attr('data-id')})});
+  }
+
+  function removeQuestion(id){
+      if(confirm("Are you sure?"))
+        $.ajax({url: "/admin/forms/#{@form.id}/form_questions/" + id, type: "DELETE"});
+  }
+
+  function editQuestion(id){
+    $('#question_container').load("/admin/forms/#{@form.id}/form_questions/" + id + "/edit").dialog({modal:true, closeOnEscape: false});
+  }

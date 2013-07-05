@@ -1,0 +1,8 @@
+%li{:class => "draggable_question form_question", "data-id" => question.id, "data-qtype" => question.question_type}
+  .labels.bt.bt_grey.bt_icon
+    %span
+      = image_tag("admin/question_#{question.question_type}.png")
+      = truncate(question.title, :length => 120)
+    .bt_group.cf
+      = link_to_function image_tag("admin/edit.png"), "editQuestion(#{question.id})", :title => "Edit question"
+      = link_to_function image_tag("admin/remove.png"), "removeQuestion(#{question.id})", :title => "Remove question"

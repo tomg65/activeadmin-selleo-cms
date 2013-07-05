@@ -1,0 +1,6 @@
+%li.draggable_question_type.form_question{"data-id" => "null", "data-qtype" => qtype}
+  .bt.bt_grey.bt_icon
+    %span/
+    %p
+      = image_tag("admin/question_#{qtype}.png")
+      = ActiveadminSelleoCms::FormQuestion.question_type_dictionary(qtype)
