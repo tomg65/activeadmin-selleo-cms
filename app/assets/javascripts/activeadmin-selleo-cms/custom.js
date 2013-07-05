@@ -156,7 +156,7 @@ function savePage(){
 }
 
 $(function(){
-    if (EDITING == true) {
+    if ( (typeof EDITING != "undefined") && (EDITING == true) ) {
         $('section').addClass("editing");
         $('#file-manager').dialog({
             width: 'auto',
