@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117150808) do
+ActiveRecord::Schema.define(:version => 20130625104459) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20130117150808) do
   add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
 
   create_table "activeadmin_selleo_cms_assets", :force => true do |t|
-    t.string   "data_file_name",    :null => false
+    t.string   "data_file_name",     :null => false
     t.string   "data_content_type"
     t.integer  "data_file_size"
     t.integer  "assetable_id"
@@ -37,12 +37,42 @@ ActiveRecord::Schema.define(:version => 20130117150808) do
     t.string   "type"
     t.integer  "width"
     t.integer  "height"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.string   "caption"
+    t.integer  "position"
   end
 
   add_index "activeadmin_selleo_cms_assets", ["assetable_type", "assetable_id"], :name => "idx_activeadmin_selleo_cms_assets_assetable"
   add_index "activeadmin_selleo_cms_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_activeadmin_selleo_cms_asset_assetable_type"
+
+  create_table "activeadmin_selleo_cms_form_question_options", :force => true do |t|
+    t.integer "form_question_id"
+    t.string  "title"
+    t.integer "position"
+  end
+
+  add_index "activeadmin_selleo_cms_form_question_options", ["form_question_id"], :name => "form_question_id_index"
+
+  create_table "activeadmin_selleo_cms_form_questions", :force => true do |t|
+    t.integer "form_id"
+    t.string  "title"
+    t.string  "hint"
+    t.integer "question_type"
+    t.integer "position"
+    t.boolean "is_required",      :default => false
+    t.boolean "is_multi",         :default => false
+    t.boolean "has_other_option", :default => false
+  end
+
+  add_index "activeadmin_selleo_cms_form_questions", ["form_id"], :name => "form_id_index"
+
+  create_table "activeadmin_selleo_cms_forms", :force => true do |t|
+    t.string "title"
+  end
 
   create_table "activeadmin_selleo_cms_locales", :force => true do |t|
     t.string  "name"
@@ -85,6 +115,17 @@ ActiveRecord::Schema.define(:version => 20130117150808) do
     t.datetime "updated_at",                                    :null => false
     t.boolean  "redirect_to_first_sub_page", :default => false
     t.text     "settings"
+  end
+
+  create_table "activeadmin_selleo_cms_related_items", :force => true do |t|
+    t.integer  "relatable_id"
+    t.string   "relatable_type"
+    t.integer  "page_id"
+    t.string   "related_url"
+    t.string   "title"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "position"
   end
 
   create_table "activeadmin_selleo_cms_section_translations", :force => true do |t|

@@ -6,8 +6,6 @@ module ActiveadminSelleoCms
 
     it "should initialize translations for all enabled locales" do
       page = FactoryGirl.build(:page)
-      page.translations.should be_empty
-      page.initialize_missing_translations
       page.translations.map(&:locale).sort.should == Locale.available_locale_codes.sort
     end
 
@@ -30,8 +28,6 @@ module ActiveadminSelleoCms
 
     it "should initialize all missing sections" do
       page = FactoryGirl.create(:page)
-      page.sections.should be_empty
-      page.initialize_missing_sections
       page.sections.map(&:name).should include("header", "content", "footer")
     end
 
