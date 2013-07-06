@@ -64,7 +64,7 @@ module ActiveadminSelleoCms
         end
 
         doc.css('form[data-form-id]').each do |form|
-          form.replace av.render(:file => File.join(ActiveadminSelleoCms::Engine.root, 'app/views/pages/_form'), :layout => nil, :locals => { :form => Form.find(form.attributes["data-form-id"].to_s) })
+          form.replace av.render(:file => File.join(ActiveadminSelleoCms::Engine.root, 'app/views/forms/_form'), :layout => nil, :locals => { :form => Form.find(form.attributes["data-form-id"].to_s) })
         end
       end
 

@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri"
   s.add_dependency "remotipart", "~> 1.0"
   s.add_dependency "acts_as_list"
+  s.add_dependency "wicked_pdf"
 
   s.add_development_dependency "pg"
   s.add_development_dependency "rspec"

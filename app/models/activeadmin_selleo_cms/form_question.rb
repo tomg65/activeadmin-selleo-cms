@@ -48,26 +48,16 @@ module ActiveadminSelleoCms
 
     def input_type
       if question_type == TYPE_TEXT and is_multi
-        :text
+        :text_area_tag
       elsif question_type == TYPE_TEXT
-        :string
+        :text_field_tag
       elsif question_type == TYPE_SELECT and is_multi
-        :check_boxes
+        :check_box_tag
       elsif question_type == TYPE_SELECT
-        :radio
+        :radio_button_tag
       elsif question_type == TYPE_FILE
-        :file
+        :file_field_tag
       end
-    end
-
-    def required
-      is_required ? { required: true } : {}
-    end
-
-    def input_html
-      {
-          input_html: {}.merge(required)
-      }
     end
 
     def collection
@@ -80,9 +70,6 @@ module ActiveadminSelleoCms
       end
     end
 
-    def input_options
-      { as: input_type, label: title }.merge(collection).merge(input_html)
-    end
   end
 
 end

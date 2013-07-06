@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
+  resources :forms, :only => [] do
+    member do
+      post :download
+      post :deliver
+    end
+  end
+
   scope ":locale", :locale => /\w{2}/ do
     scope "search" do
       resources :searches, path: '', only: [:show]

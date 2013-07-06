@@ -1,0 +1,14 @@
+<%= form_tag '/forms', multipart: true, id: dom_id(form) do %>
+    <% form.questions.each do |question| %>
+        <%= label_tag dom_id(question), question.title %>
+        <% if [:check_box_tag, :radio_button_tag].include? question.input_type %>
+            <% question.options.each do |option| %>
+                <%= send(question.input_type, dom_id(option), question.id, params[dom_id(option)]) %>
+                <%= label_tag dom_id(option), option.title %>
+            <% end %>
+        <% else %>
+            <%= send(question.input_type, dom_id(question), params[dom_id(question)]) %>
+        <% end %>
+        <%= text_field_tag "#{dom_id(question)}_other", params["#{dom_id(question)}_other"] if question.has_other_option %>
+    <% end %>
+<% end %>
