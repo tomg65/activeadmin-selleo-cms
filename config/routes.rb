@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :form_answers, :only => [:create, :index]
+
   scope ":locale", :locale => /\w{2}/ do
     scope "search" do
       resources :searches, path: '', only: [:show]

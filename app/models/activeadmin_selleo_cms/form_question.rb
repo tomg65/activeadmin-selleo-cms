@@ -13,7 +13,7 @@ module ActiveadminSelleoCms
     acts_as_list :scope => :form_id
 
     attr_accessor :order
-    attr_accessible :title, :question_type, :position, :is_required, :is_multi, :has_other_option, :options_attributes, :order
+    attr_accessible :title, :question_type, :position, :is_required, :is_multi, :has_other_option, :options_attributes, :order, :hint
     accepts_nested_attributes_for :options, allow_destroy: true
 
     validates :title, presence: true, uniqueness: {scope: :form_id}

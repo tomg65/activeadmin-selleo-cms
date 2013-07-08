@@ -1,21 +1,30 @@
-<%= form_tag '/forms', multipart: true, id: dom_id(form) do %>
+<%= form_tag '/forms', multipart: true, id: dom_id(form), data: {form_id: form.id} do %>
+  <ol class="questions">
     <% form.questions.each do |question| %>
+      <li class="question <%= question.input_type %>">
         <%= label_tag dom_id(question), question.title %>
+        <% if question.hint.present? %>
+            <p class="hint"><%=  question.hint  %></p>
+        <% end %>
         <% if [:check_box_tag].include? question.input_type %>
             <% question.options.each do |option| %>
-                <%= send(question.input_type, "#{dom_id(question)}[]", option.id, false, required: question.is_required, id: dom_id(option)) %>
+                <%= send(question.input_type, "#{dom_id(question)}[]", option.id, false, required: question.is_required, id: dom_id(option), data: {form_question_id: question.id} ) %>
                 <%= label_tag dom_id(option), option.title %>
             <% end %>
         <% elsif [:radio_button_tag].include? question.input_type %>
             <% question.options.each do |option| %>
-                <%= send(question.input_type, dom_id(question), option.id, false, required: question.is_required, id: dom_id(option)) %>
+                <%= send(question.input_type, dom_id(question), option.id, false, required: question.is_required, id: dom_id(option), data: {form_question_id: question.id}) %>
                 <%= label_tag dom_id(option), option.title %>
             <% end %>
+        <% elsif [:file_field_tag].include? question.input_type %>
+            <%= send(question.input_type, dom_id(question), required: question.is_required, data: {form_question_id: question.id}) %>
         <% else %>
-            <%= send(question.input_type, dom_id(question), "", required: question.is_required) %>
+            <%= send(question.input_type, dom_id(question), "", required: question.is_required, data: {form_question_id: question.id}) %>
         <% end %>
-        <%= text_field_tag "#{dom_id(question)}_other" if question.has_other_option %>
+        <%= text_field_tag "#{dom_id(question)}_other", "", data: {form_question_id: question.id} if question.has_other_option %>
+      </li>
     <% end %>
+  </ol>
 <% end %>
 
 <%= button_to_function "Print", "$('##{dom_id(form)}').printElement({printMode:'popup'});" %>

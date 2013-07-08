@@ -6,6 +6,8 @@
                 <%= send(question.input_type, dom_id(question), option.id, Array(params[dom_id(question)]).include?(option.id.to_s)) %>
                 <%= label_tag dom_id(option), option.title %>
             <% end %>
+        <% elsif [:file_field_tag].include? question.input_type %>
+            <%= send(question.input_type, dom_id(question), required: question.is_required) %>
         <% else %>
             <%= send(question.input_type, dom_id(question), params[dom_id(question)]) %>
         <% end %>

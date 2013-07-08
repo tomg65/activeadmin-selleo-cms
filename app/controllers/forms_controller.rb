@@ -29,4 +29,8 @@ class FormsController < ApplicationController
     end
   end
 
+  def answer
+
+  end
+
 end
