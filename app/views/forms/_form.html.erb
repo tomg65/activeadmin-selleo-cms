@@ -1,9 +1,14 @@
 <%= form_tag '/forms', multipart: true, id: dom_id(form) do %>
     <% form.questions.each do |question| %>
         <%= label_tag dom_id(question), question.title %>
-        <% if [:check_box_tag, :radio_button_tag].include? question.input_type %>
+        <% if [:check_box_tag].include? question.input_type %>
             <% question.options.each do |option| %>
-                <%= send(question.input_type, dom_id(question), question.id, false, required: question.is_required) %>
+                <%= send(question.input_type, "#{dom_id(question)}[]", option.id, false, required: question.is_required, id: dom_id(option)) %>
+                <%= label_tag dom_id(option), option.title %>
+            <% end %>
+        <% elsif [:radio_button_tag].include? question.input_type %>
+            <% question.options.each do |option| %>
+                <%= send(question.input_type, dom_id(question), option.id, false, required: question.is_required, id: dom_id(option)) %>
                 <%= label_tag dom_id(option), option.title %>
             <% end %>
         <% else %>
