@@ -24,7 +24,7 @@ class FormsController < ApplicationController
           file << pdf
         end
         ActiveadminSelleoCms::FormMailer.form_submission(pdf_path).deliver
-        render :nothing => true
+        flash[:notice] = "Your form has been sent. Thank you."
       end
     end
   end
