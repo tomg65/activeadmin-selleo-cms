@@ -20,6 +20,8 @@
       - elsif resource.activeadmin_selleo_cms_section.related?
         = render partial: '/admin/related_items/related_item', collection: resource.related_items
 
+= link_to_function I18n.t('active_admincms..close'), "$('#file-manager').dialog('close');"
+
 :javascript
   $('ol#assets').sortable({
     stop: function(event, ui) {

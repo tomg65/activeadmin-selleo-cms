@@ -28,25 +28,25 @@
                   - unless @page.new_record?
                     - if section.attachments?
                       %li.input
-                        %ol{ :style => "padding-left: 275px;" }
+                        %ol
                           %li= button_to_function t("active_admin.cms.manage_attachments"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
                     - if section.image?
                       %li.input
                         %label Image
-                        %ol{ :style => "padding-left: 275px;" }
+                        %ol
                           %li= button_to_function t("active_admin.cms.file_manager.edit_image"), "fileManager('#{section_form_translated.object.image ? edit_admin_image_path(section_form_translated.object.image.id) : new_admin_image_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id })}')", style: "padding: 5px;"
 
                     - if section.images?
                       %li.input
                         %label Attachments
-                        %ol{ :style => "padding-left: 275px;" }
+                        %ol
                           %li= button_to_function t("active_admin.cms.manage_images"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
                     - if section.attachment?
                       %li.input
                         %label Attachment
-                        %ol{ :style => "padding-left: 275px;" }
+                        %ol
                           %li= button_to_function t("active_admin.cms.file_manager.edit_attachment"), "fileManager('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id }) }')", style: "padding: 5px;"
 
                     - if section.related?
