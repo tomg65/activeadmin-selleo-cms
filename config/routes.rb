@@ -3,12 +3,16 @@ Rails.application.routes.draw do
 
   resources :forms, :only => [] do
     member do
-      post :download
-      post :deliver
+      get :download
+      get :deliver
     end
   end
 
-  resources :form_answers, :only => [:create, :index]
+  resources :form_answers do
+    collection do
+      post :find_or_create
+    end
+  end
 
   scope ":locale", :locale => /\w{2}/ do
     scope "search" do

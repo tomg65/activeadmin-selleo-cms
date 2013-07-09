@@ -20,6 +20,16 @@ function submitAnswer(form_id, input, value){
     })
 }
 
+function fileUpload(form_id, dom_id, question_id) {
+    $('#popup').html('').load('/form_answers/find_or_create',
+        {
+            form_uuid: localStorage[form_id],
+            dom_id: dom_id,
+            form_question_id: question_id
+        }
+    ).dialog('open');
+}
+
 function setupCmsForm(form_id) {
     $('#'+form_id+' .required fieldset [type="radio"]:first,[type="checkbox"]:first').attr('required','true');
     $('#'+form_id).validate();
@@ -28,6 +38,8 @@ function setupCmsForm(form_id) {
         localStorage[form_id] = generateUUID();
     }
 
+    $('#'+form_id).data('uuid', localStorage[form_id]);
+
     $.get('/form_answers.json', {
        form_uuid: localStorage[form_id]
     }).success(function(resp){
@@ -35,9 +47,11 @@ function setupCmsForm(form_id) {
             if (this["value"] != null) {
                 var form_elem = $('#'+this["dom_id"]);
                 if ( ($(form_elem).attr('type') == 'checkbox') || ($(form_elem).attr('type') == 'radio') ) {
-                    $(form_elem).attr('checked', true);
+                    if (this["value"] == "true") {
+                        $(form_elem).attr('checked', true);
+                    }
                 } else if ($(form_elem).attr('type') == 'file') {
-//                 ??
+                    // do nothing
                 } else {
                     $(form_elem).val(this["value"]);
                 }
@@ -47,7 +61,7 @@ function setupCmsForm(form_id) {
 
     $('#' + form_id + ' input, textarea').change(function(){
       if ($(this).attr('type') == 'file') {
-//            ??
+        // do nothing
       } else if ( ($(this).attr('type') == 'checkbox') || ($(this).attr('type') == 'radio') ) {
           submitAnswer(form_id, this, $(this).is(':checked'))
       } else {

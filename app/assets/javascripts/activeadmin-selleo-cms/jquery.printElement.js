@@ -115,7 +115,7 @@
         });
         $("textarea", $element).each(function () {
             //Thanks http://blog.ekini.net/2009/02/24/jquery-getting-the-latest-textvalue-inside-a-textarea/
-            var value = $(this).attr('value');
+            var value = $(this).val();
             //fix for issue 7 (http://plugins.jquery.com/node/13503 and http://github.com/erikzaadi/jQueryPlugins/issues#issue/7)
             if ($.browser.mozilla && this.firstChild) {
                 this.firstChild.textContent = value;

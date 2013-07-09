@@ -6,9 +6,14 @@ class FormsController < ApplicationController
   end
 
   def download
+    ActiveadminSelleoCms::FormAnswer.where(form_uuid: params[:form_uuid])
+
     respond_to do |format|
       format.pdf do
-        render :pdf => @form.title.parameterize
+        render :pdf => @form.title.parameterize, :show_as_html => false
+      end
+      format.html do
+        render :pdf => @form.title.parameterize, :show_as_html => true
       end
     end
   end
@@ -16,21 +21,12 @@ class FormsController < ApplicationController
   def deliver
     respond_to do |format|
       format.html do
-        pdf = WickedPdf.new.pdf_from_string(
-            render_to_string('download.pdf.erb')
-        )
-        pdf_path = File.join(ActiveadminSelleoCms::Form::PDF_PATH, "#{@form.title.parameterize}-#{Time.now.to_s.parameterize}.pdf")
-        File.open(pdf_path, 'wb') do |file|
-          file << pdf
-        end
-        ActiveadminSelleoCms::FormMailer.form_submission(pdf_path).deliver
+        ActiveadminSelleoCms::FormMailer.form_submission(@form, params[:form_uuid]).deliver
         flash[:notice] = "Your form has been sent. Thank you."
       end
     end
   end
 
-  def answer
-
-  end
+  def answer; end
 
 end
