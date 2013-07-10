@@ -77,7 +77,7 @@ module ActiveadminSelleoCms
       section_definition = sectionable.layout.find_section(name) if sectionable and sectionable.respond_to? :layout
       if section_definition
         if section_definition.text?
-          render_body
+          render
         elsif section_definition.image?
           image ? image.url : ""
         end

@@ -3,11 +3,26 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
+CKEDITOR.stylesSet.add( 'jips', [
+    // Block-level styles.
+    { name: 'Header 1', element: 'h1' },
+    { name: 'Header 2',  element: 'h2' },
+    { name: 'Header 3',  element: 'h3' },
+    { name: 'Header 4',  element: 'h4' },
+    { name: 'Paragraph',  element: 'p' },
+
+    // Inline styles.
+    { name: 'CSS Style', element: 'span', attributes: { 'class': 'my_style' } },
+    { name: 'Marker: Yellow', element: 'span', styles: { 'background-color': 'Yellow' } }
+]);
+
 CKEDITOR.editorConfig = function( config )
 {
     // Define changes to default configuration here. For example:
     // config.language = 'fr';
     // config.uiColor = '#AADC6E';
+
+    config.allowedContent = true;
 
     /* Filebrowser routes */
     // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
@@ -30,6 +45,8 @@ CKEDITOR.editorConfig = function( config )
 
     // The location of a script that handles file uploads.
     config.filebrowserUploadUrl = "/ckeditor/attachment_files";
+
+    config.extraPlugins = "inlinesave,formswidget";
 
     // Rails CSRF token
     config.filebrowserParams = function(){
@@ -72,75 +89,18 @@ CKEDITOR.editorConfig = function( config )
         return url + ( ( url.indexOf( "?" ) != -1 ) ? "&" : "?" ) + queryString.join( "&" );
     };
 
-    // Integrate Rails CSRF token into file upload dialogs (link, image, attachment and flash)
-    CKEDITOR.on( 'dialogDefinition', function( ev ){
-        // Take the dialog name and its definition from the event data.
-        var dialogName = ev.data.name;
-        var dialogDefinition = ev.data.definition;
-        var content, upload;
-
-        if (CKEDITOR.tools.indexOf(['link', 'image', 'attachment', 'flash'], dialogName) > -1) {
-            content = (dialogDefinition.getContents('Upload') || dialogDefinition.getContents('upload'));
-            upload = (content == null ? null : content.get('upload'));
-
-            if (upload && upload.filebrowser['params'] == null) {
-                upload.filebrowser['params'] = config.filebrowserParams();
-                upload.action = config.addQueryString(upload.action, upload.filebrowser['params']);
-            }
-        }
-
-        if (dialogName == 'link') {
-            var linkInfoTab = dialogDefinition.getContents('info');
-            var pageField = linkInfoTab.get('page');
-
-            if (!pageField) {
-                $.ajax({
-                    url: '/en.json',
-                    type: 'GET',
-                    async: false
-                }).success(function(resp){
-                        linkInfoTab.add( {
-                            type : 'select',
-                            label : 'Page',
-                            id : 'page',
-                            name : 'page',
-                            items: resp,
-                            onChange: function(ev){
-                                var diag = CKEDITOR.dialog.getCurrent();
-                                var url = diag.getContentElement('info','url');
-                                var locale = $('[id*="lang"]:visible').find('input[name*="locale"]:hidden').val();
-                                url.setValue(ev.data.value.replace(':locale', locale));
-                            }
-                        });
-                    });
-            }
-        }
-    });
-
-    config.height = '200px';
-    config.width = '800px';
-
-    config.toolbar = 'Lite';
-
-    config.forcePasteAsPlainText = true;
-    config.fontSize_sizes = '12/12px;14/14px;18/18px;24/24px;30/30px;';
-
-    /* Extra plugins */
-    // works only with en, ru, uk locales
-    config.extraPlugins = "embed,attachment";
-
-    /* Toolbars */
-    config.toolbar = 'Lite';
+    config.toolbar = 'Full';
 
     config.toolbar_Easy =
         [
-            ['Source','-','Preview'],
-            ['Cut','Copy','Paste','PasteText','PasteFromWord',],
+            ['Source','-','Preview', 'Save'],
+            ['Cut','Copy','Paste'],
             ['Undo','Redo','-','SelectAll','RemoveFormat'],
-            ['Styles','Format'], ['Subscript', 'Superscript', 'TextColor'], ['Maximize','-','About'], '/',
+            ['Font', 'Styles', 'FontSize'],
+            ['Subscript', 'Superscript', 'TextColor'], ['Maximize','-','About'], '/',
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
             ['Bold','Italic','Underline','Strike'], ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-            ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-            ['Link','Unlink','Anchor'], ['Image', 'Attachment', 'Flash', 'Embed'],
+            ['Link','Unlink','Anchor'], ['Image', 'Attachment', 'Flash'],
             ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
         ];
 
@@ -176,7 +136,33 @@ CKEDITOR.editorConfig = function( config )
 
     config.toolbar_Header =
         [
-            ['Bold'],
+            ['Bold']
         ];
 
+    config.toolbar_Link =
+        [
+            ['Link', 'Unlink']
+        ];
+
+    config.stylesSet = 'jips';
+
+    // Integrate Rails CSRF token into file upload dialogs (link, image, attachment and flash)
+    CKEDITOR.on( 'dialogDefinition', function( ev ){
+        // Take the dialog name and its definition from the event data.
+        var dialogName = ev.data.name;
+        var dialogDefinition = ev.data.definition;
+        var content, upload;
+
+        if (CKEDITOR.tools.indexOf(['link', 'image', 'attachment', 'flash'], dialogName) > -1) {
+            content = (dialogDefinition.getContents('Upload') || dialogDefinition.getContents('upload'));
+            upload = (content == null ? null : content.get('upload'));
+
+            if (upload && upload.filebrowser && upload.filebrowser['params'] === undefined) {
+                upload.filebrowser['params'] = config.filebrowserParams();
+                upload.action = config.addQueryString(upload.action, upload.filebrowser['params']);
+            }
+        }
+    });
 };
+
+

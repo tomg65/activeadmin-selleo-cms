@@ -16,7 +16,8 @@
                   type: 'PUT',
                   data: {
                       'section': {
-                          'body': editor.getData()
+                          'body': editor.getData(),
+                          'locale': $('html').attr('lang')
                       }
                   }
               });
@@ -30,7 +31,7 @@
 
 	// Register a plugin named "save".
 	CKEDITOR.plugins.add( pluginName, {
-		icons: 'save', // %REMOVE_LINE_CORE%
+		icons: 'formswidget', // %REMOVE_LINE_CORE%
 		init: function( editor ) {
 
 			editor.addCommand( pluginName, saveCmd );
