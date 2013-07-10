@@ -34,9 +34,8 @@
   </ol>
 <% end %>
 
-<%= button_to_function "Print", "$('##{dom_id(form)}').printElement({printMode:'popup'});", class: 'print', title: 'Print' %>
+<%= button_to_function "Print", "print(#{form.id}, '#{dom_id(form)}')", class: 'print', title: 'Print' %>
 <%= button_to_function "Download PDF", "downloadPDF(#{form.id}, '#{dom_id(form)}')", class: 'save', title: 'Download PDF' %>
-<%= button_to_function "Download", "download(#{form.id}, '#{dom_id(form)}')", class: 'save', title: 'Download' %>
 <%= button_to_function "Send to JIPS", "deliver(#{form.id}, '#{dom_id(form)}')", class: 'send' %>
 
 <script>
@@ -48,8 +47,8 @@
       window.location='/forms/'+form_id+'/download.pdf?form_uuid='+localStorage[form_dom_id];
   }
 
-  function download(form_id, form_dom_id){
-      window.location='/forms/'+form_id+'/download?form_uuid='+localStorage[form_dom_id];
+  function print(form_id, form_dom_id){
+      window.open('/forms/'+form_id+'/download?form_uuid='+localStorage[form_dom_id]);
   }
 
   function deliver(form_id, form_dom_id) {
