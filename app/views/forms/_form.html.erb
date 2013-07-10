@@ -48,7 +48,7 @@
   }
 
   function print(form_id, form_dom_id){
-      window.open('/forms/'+form_id+'/download?form_uuid='+localStorage[form_dom_id]);
+      window.open('/forms/'+form_id+'/download?print=true&form_uuid='+localStorage[form_dom_id]);
   }
 
   function deliver(form_id, form_dom_id) {

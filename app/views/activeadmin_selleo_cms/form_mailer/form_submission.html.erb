@@ -4,9 +4,9 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-<h3>New form has been submitted!</h3>
+<h3>A new form "<%= @form.title %>" has been submitted!</h3>
 <p>
-  <%= link_to "Click here for details.", "/forms/#{@form.id}/download?form_uuid=#{@form_uuid}" %>
+  <%= link_to "Click here for details.", "http://#{ActionMailer::Base.default_url_options[:host]}/forms/#{@form.id}/download?form_uuid=#{@form_uuid}" %>
 </p>
 </body>
 </html>
