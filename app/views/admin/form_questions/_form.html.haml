@@ -1,0 +1,46 @@
+= semantic_nested_form_for [:admin, @form, @form_question], url: (@form_question.new_record? ? admin_form_form_questions_path(@form.id) : admin_form_form_question_path(@form.id, @form_question.id)), remote: true, html: {id: "form_question_form"} do |form|
+  = form.inputs "Options" do
+    = form.input :title
+    = form.input :hint
+    = form.input :is_required
+    - unless @form_question.is_type?('file')
+      = form.input :is_multi
+    = form.input :question_type, as: :hidden
+    - if @form_question.is_type?('select')
+      = form.input :has_other_option
+      = form.input :order, as: :hidden
+
+  - if @form_question.is_type?('select')
+    = form.inputs "Add options" do
+      %div#options
+        = form.fields_for :options do |ff|
+          %div.sortable-option
+            %ol
+              = ff.input :temp_id, as: :hidden, value: ff.object.id ? ff.object.id : "empty"
+              = ff.input :title
+              = ff.link_to_remove "Remove"
+
+      = form.link_to_add "Add an option", :options, data: { target: "#options" }
+
+  = form.actions do
+    %li.action.input_action
+      = link_to_function "Submit", "submit_form_question_form()"
+    %li.cancel
+      = link_to_function "Cancel", "$('#question_container').dialog('close');$('ol.form_questions_container li.draggable_question_type.form_question').remove();"
+
+:javascript
+
+  $(document).on('nested:fieldAdded', function(event){
+    event.field.find('input[type="hidden"][value="empty"]').val(new Date().getTime())
+  })
+
+  function submit_form_question_form(){
+    $('#form_question_order').val($.map($('input[type="hidden"][id$="temp_id"]'), function(obj){return $(obj).val()}))
+    $('#form_question_form').submit();
+  }
+
+  $(function(){
+      $("#options").sortable({
+     items: ".sortable-option"
+     }).disableSelection();
+  });

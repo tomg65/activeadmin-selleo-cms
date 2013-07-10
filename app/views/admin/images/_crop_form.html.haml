@@ -1,0 +1,16 @@
+= semantic_form_for [:admin, resource], remote: true, html: { multipart: true } do |form|
+
+  = form.inputs id: 'image_fields' do
+    = form.input :assetable_type, as: :hidden, input_html: { value: resource.assetable_type }
+    = form.input :assetable_id, as: :hidden, input_html: { value: resource.assetable_id }
+    = form.input :image_width, as: :hidden, input_html: { value: resource.assetable.activeadmin_selleo_cms_section.width }
+    = form.input :image_height, as: :hidden, input_html: { value: resource.assetable.activeadmin_selleo_cms_section.height }
+    = form.input :resize_method, as: :hidden, input_html: { value: resource.assetable.activeadmin_selleo_cms_section.resize_method }
+    = form.input :crop_x, as: :hidden
+    = form.input :crop_y, as: :hidden
+    = form.input :crop_w, as: :hidden
+    = form.input :crop_h, as: :hidden
+    %div.jcrop
+      = image_tag resource.data.url(:original)
+  = form.actions :submit
+

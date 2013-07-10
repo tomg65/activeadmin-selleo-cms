@@ -84,7 +84,7 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
         render action: :new
       else
         create! do |success, failure|
-          success.html { redirect_to admin_page_path(@page.id)  }
+          success.html { redirect_to "#{@page.url}?editing=true"  }
           failure.html { render action: :new  }
         end
       end

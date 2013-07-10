@@ -8,51 +8,51 @@
     = form.input :meta_keywords, input_html: { class: 'link-url-hide' }
     = form.input :meta_description, input_html: { rows: 3, class: 'link-url-hide' }
     = form.input :locale, :as => :hidden, :label => false
-    -#- unless @page.new_record?
-    - @section_forms.sort_by{|sf| sf.object.name}.each do |section_form|
-      %section{:name => section_form.object.name, :id => "id-#{section_form.object.name}"}
-        = section_form.semantic_fields_for :translations do |section_form_translated|
-          - if section_form_translated.object.locale.to_sym == locale.code
-            - section = @page.layout.find_section(section_form.object.name)
+    - unless @inline
+      - @section_forms.sort_by{|sf| sf.object.name}.each do |section_form|
+        %section{:name => section_form.object.name, :id => "id-#{section_form.object.name}"}
+          = section_form.semantic_fields_for :translations do |section_form_translated|
+            - if section_form_translated.object.locale.to_sym == locale.code
+              - section = @page.layout.find_section(section_form.object.name)
 
-            %fieldset.inputs
-              %legend
-                %span= "#{section.name.titleize} section"
+              %fieldset.inputs
+                %legend
+                  %span= "#{section.name.titleize} section"
 
-              %ol
-                - if section.text?
-                  = section_form_translated.input :body, as: section.type, label: "Content", input_html: { toolbar: section.toolbar }
+                %ol
+                  - if section.text?
+                    = section_form_translated.input :body, as: section.type, label: "Content", label: false, input_html: { ckeditor: { toolbar: section.toolbar } }
 
-                = section_form_translated.input :locale, :as => :hidden, :label => false
+                  = section_form_translated.input :locale, :as => :hidden, :label => false
 
-                - if section.attachment?
-                  %li.input
-                    %label Attachment
-                    %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function t("active_admin.cms.file_manager.edit_attachment"), "fileManager('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id }) }')", style: "padding: 5px;"
+                  - unless @page.new_record?
+                    - if section.attachments?
+                      %li.input
+                        %ol
+                          %li= button_to_function t("active_admin.cms.manage_attachments"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
-                - if section.attachments?
-                  %li.input
-                    %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function t("active_admin.cms.manage_attachments"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
+                    - if section.image?
+                      %li.input
+                        %label Image
+                        %ol
+                          %li= button_to_function t("active_admin.cms.file_manager.edit_image"), "fileManager('#{section_form_translated.object.image ? edit_admin_image_path(section_form_translated.object.image.id) : new_admin_image_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id })}')", style: "padding: 5px;"
 
-                - if section.related?
-                  %li.input
-                    %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function t("active_admin.cms.manage_related"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
+                    - if section.images?
+                      %li.input
+                        %label Attachments
+                        %ol
+                          %li= button_to_function t("active_admin.cms.manage_images"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
-                - if section.image?
-                  %li.input
-                    %label Image
-                    %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function t("active_admin.cms.file_manager.edit_image"), "fileManager('#{section_form_translated.object.image ? edit_admin_image_path(section_form_translated.object.image.id) : new_admin_image_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id })}')", style: "padding: 5px;"
+                    - if section.attachment?
+                      %li.input
+                        %label Attachment
+                        %ol
+                          %li= button_to_function t("active_admin.cms.file_manager.edit_attachment"), "fileManager('#{section_form_translated.object.attachment ? edit_admin_attachment_path(section_form_translated.object.attachment.id): new_admin_attachment_path(image: { assetable_type: section_form_translated.object.class.name, assetable_id: section_form_translated.object.id }) }')", style: "padding: 5px;"
 
-                - if section.images?
-                  %li.input
-                    %label Images
-                    %ol{ :style => "padding-left: 275px;" }
-                      %li= button_to_function t("active_admin.cms.manage_images"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
+                    - if section.related?
+                      %li.input
+                        %ol{ :style => "padding-left: 275px;" }
+                          %li= button_to_function t("active_admin.cms.manage_related"), "fileManager('#{edit_admin_section_translation_path(section_form_translated.object.id)}')", style: "padding: 5px;"
 
-
-          - else
-            = ""
+            - else
+              = ""

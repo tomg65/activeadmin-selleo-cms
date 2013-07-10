@@ -28,28 +28,49 @@ module ActiveadminSelleoCms
       end
     end
 
+    def current_translation
+      translations.with_locales(I18n.fallbacks[I18n.locale]).first
+    end
+
     def image
-      @image ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.image}
-        current_translation.image
-      else
-        nil
-      end
+      current_translation.image
     end
 
     def attachment
-      @attachment ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.attachment}
-        current_translation.attachment
-      else
-        nil
-      end
+      current_translation.attachment
+    end
+
+    def attachments
+      current_translation.attachments
     end
 
     def images
-      @images ||= if current_translation = translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).detect{|t| t.images.any? }
-        current_translation.images
-      else
-        []
+      current_translation.images
+    end
+
+    def related_items
+      current_translation.related_items
+    end
+
+    def render(editing=false)
+      doc = Nokogiri::HTML(body.to_s)
+
+      unless editing
+        av = ActionView::Base.new
+        av.instance_eval do
+          def protect_against_forgery?
+            false
+          end
+        end
+
+        doc.css('form[data-form-id]').each do |form_tag|
+          if form = Form.find_by_id(form_tag.attributes["data-form-id"].to_s)
+            form_tag.replace av.render(:file => File.join(ActiveadminSelleoCms::Engine.root, 'app/views/forms/_form'), :layout => nil, :locals => { :form => form })
+          end
+        end
       end
+
+      doc.to_s.html_safe
     end
 
     def attachments
@@ -64,7 +85,7 @@ module ActiveadminSelleoCms
       section_definition = sectionable.layout.find_section(name) if sectionable and sectionable.respond_to? :layout
       if section_definition
         if section_definition.text?
-          body.to_s.html_safe
+          render
         elsif section_definition.image?
           image ? image.url : ""
         end

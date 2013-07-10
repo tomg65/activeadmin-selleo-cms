@@ -1,4 +1,5 @@
-= semantic_form_for [:admin, @page], url: (@page.new_record? ? admin_pages_path : admin_page_path(@page.id)), html: { multipart: true } do |form|
+- @inline = defined?(inline)
+= semantic_form_for [:admin, @page], url: (@page.new_record? ? admin_pages_path : admin_page_path(@page.id)), remote: @inline, html: { multipart: true } do |form|
 
   %input{name: "_change_layout", type: "hidden"}
   - @page.new_record? ? @page.initialize_missing_translations : @page.create_missing_translations
@@ -7,9 +8,10 @@
   - @section_forms = []
   -#= @page.errors.full_messages
 
-  = form.inputs general_options(@page), id: 'id-general-options' do
-    = form.input :layout_name, collection: ActiveadminSelleoCms::Layout.all.sort, include_blank: false, hint: "The form will reload on change"
-    = form.input :parent_id, as: :select, collection: nested_set_options(ActiveadminSelleoCms::Page, @page) {|i| "#{'-' * i.level} #{i.title}" }
+  = form.inputs "General options", id: 'id-general-options' do
+    - unless @inline
+      = form.input :layout_name, collection: ActiveadminSelleoCms::Layout.all.sort, include_blank: false, hint: "The form will reload on change"
+      = form.input :parent_id, as: :select, collection: nested_set_options(ActiveadminSelleoCms::Page, @page) {|i| "#{'-' * i.level} #{i.title}" }
     = form.input :show_in_menu, as: :boolean
     = form.input :is_published, as: :boolean
     = form.input :published_at, as: :datetimepicker
@@ -47,7 +49,10 @@
   = form.actions do
     = form.action :submit
     %li.cancel
-      = link_to I18n.t('active_admin.cancel'), admin_pages_path
+      - if @inline
+        = link_to_function I18n.t('active_admin.cancel'), "$('#file-manager').dialog('close');"
+      - else
+        = link_to I18n.t('active_admin.cancel'), admin_pages_path
 
 %div#file-manager
 
@@ -88,11 +93,14 @@
         });
 
         $('#file-manager').dialog({
-            width: 1200,
+            width: 'auto',
             height: 'auto',
             title: 'File manager',
             modal: true,
-            autoOpen: false
+            autoOpen: false,
+            resize: function( event, ui ) {
+              $(this).dialog("option", "position", ['center', 'center'] );
+            }
           });
     });
 

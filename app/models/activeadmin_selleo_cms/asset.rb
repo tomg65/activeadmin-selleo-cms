@@ -1,7 +1,7 @@
 module ActiveadminSelleoCms
   class Asset < ActiveRecord::Base
     attr_protected :id
-    attr_accessor :cover_width, :cover_height, :cover_resize_method
+    attr_accessor :cover_width, :cover_height, :cover_resize_method, :crop_x, :crop_y, :crop_w, :crop_h
 
     acts_as_list :scope => [:assetable_type, :assetable_id]
 

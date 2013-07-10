@@ -40,7 +40,10 @@ module ActiveadminSelleoCms
     end
 
     after_initialize do
-      self.layout_name = Layout.all.first if (new_record? and layout_name.blank?) or (read_attribute(:layout_name) and !layout)
+      if attributes.keys.include?("layout_name")
+        self.layout_name = Layout.all.first if (new_record? and layout_name.blank?) or (read_attribute(:layout_name) and !layout)
+        create_missing_sections unless new_record?
+      end
     end
 
     after_initialize do
@@ -81,7 +84,7 @@ module ActiveadminSelleoCms
     end
 
     def to_label
-      "#{'- ' * depth} #{title}"
+      "#{'- ' * depth.to_i} #{title}"
     end
 
     def section_names
@@ -130,11 +133,7 @@ module ActiveadminSelleoCms
     end
 
     def method_missing(sym, *args)
-      if section = sections.with_name(sym).first #and section_translation = section.translations.with_locales(I18n.fallbacks[I18n.locale]).order_by_locales(I18n.fallbacks[I18n.locale]).first
-        section
-      elsif section_names.include?(sym.to_s)
-        "Empty section"
-      end
+      sections.with_name(sym.to_s).first
     end
 
     def to_slug
@@ -143,7 +142,7 @@ module ActiveadminSelleoCms
 
     def breadcrumb
       self_and_ancestors.map{|p| p.translated_attribute(:title, I18n.default_locale)}.join(' &raquo; ').html_safe
-    end
+    end    
 
     class Translation
       attr_protected :id

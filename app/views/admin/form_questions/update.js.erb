@@ -1,0 +1,7 @@
+<% if @form_question.save %>
+$('#question_container').dialog('close');
+$('ol.form_questions_container li[data-id="<%= @form_question.id %>"]').replaceWith("<%= escape_javascript(render(partial: "admin/forms/question", locals: { question: @form_question})) %>");
+<% @form_question.set_options_order %>
+<% else %>
+$('#question_container').html('<%= escape_javascript(render(partial: 'form')) %>');
+<% end %>

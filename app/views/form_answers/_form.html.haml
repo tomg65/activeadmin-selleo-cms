@@ -1,0 +1,5 @@
+= semantic_form_for @form_answer, remote: true, html: { multipart: true } do |form|
+
+  = form.inputs id: 'attachment_fields' do
+    = form.input :data, hint: @form_answer.data_file_name
+    = form.actions :submit

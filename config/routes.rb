@@ -1,9 +1,22 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
+  resources :forms, :only => [] do
+    member do
+      get :download
+      get :deliver
+    end
+  end
+
+  resources :form_answers do
+    collection do
+      post :find_or_create
+    end
+  end
+
   constraints(DomainBasedLocale) do
     match ':slug5(/:slug4(/:slug3(/:slug2(/:slug1))))'  => 'pages#show'
-  end
+  end  
 
   scope ":locale", :locale => /\w{2}/ do
     scope "search" do

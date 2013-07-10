@@ -69,4 +69,13 @@ module PagesHelper
   def domain_based_locale?
     request.env[:locale].present?
   end
+
+  def switch_editing
+    params[:editing] ? request.url.sub(/\?editing=[^&]*/, '?').sub(/\&editing=[^&]*/, '').sub(/\?$/,'') : request.url+'?editing=true'
+  end
+
+  def editing?
+    current_user and params[:editing]=="true"
+  end
+
 end

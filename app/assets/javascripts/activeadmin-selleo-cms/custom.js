@@ -22,6 +22,34 @@ function fileManager(url){
     }).dialog('open');
 }
 
+function updateCrop(coords) {
+    $('#image_crop_x').val(coords.x);
+    $('#image_crop_y').val(coords.y);
+    $('#image_crop_w').val(coords.w);
+    $('#image_crop_h').val(coords.h);
+}
+
+function cropImage(asset_id, width, height) {
+    $('#file-manager').html('').load('/admin/images/'+asset_id+'/crop.js', function() {
+        $(this).dialog("option", "position", ['center', 'center'] );
+        $(this).find('img').Jcrop({
+            minSize: [ width, height ],
+            aspectRatio: width/height,
+            allowMove: true,
+            allowResize: true,
+            onChange: updateCrop,
+            onSelect: updateCrop,
+            setSelect: [0, 0, width, height]
+        });
+    }).dialog('open');
+}
+
+function editPage(page_id) {
+    $('#file-manager').html('').load('/admin/pages/'+page_id+'/edit.js', function() {
+        $(this).dialog("option", "position", ['center', 'center'] );
+    }).dialog('open');
+}
+
 function delete_asset(asset_id) {
     if(confirm('Are you sure?')) {
         $.ajax({
@@ -126,3 +154,22 @@ function savePage(){
         }
     } );
 }
+
+$(function(){
+    if ( (typeof EDITING != "undefined") && (EDITING == true) ) {
+        $('section').addClass("editing");
+        $('#file-manager').dialog({
+            width: 'auto',
+            height: 'auto',
+            title: 'CMS Editor',
+            modal: true,
+            autoOpen: false,
+            resize: function( event, ui ) {
+                $(this).dialog("option", "position", ['center', 'center'] );
+            },
+            beforeClose: function() {
+                window.location = window.location;
+            }
+        });
+    }
+});

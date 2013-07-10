@@ -18,12 +18,13 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.13"
   s.add_dependency "jquery-rails", "~> 2.2.1"
+  s.add_dependency "jquery-ui-rails", "~> 4.0.1"
   s.add_dependency "activeadmin", "~> 0.6.0"
   s.add_dependency "globalize3", "~> 0.3.0"
-  s.add_dependency "ckeditor", "3.7.3"
+  s.add_dependency "ckeditor", "4.0.4"
   s.add_dependency "paperclip"
   s.add_dependency "language_list"
-  s.add_dependency "haml"
+  s.add_dependency "haml", "3.1.8"
   s.add_dependency "awesome_nested_set"
   s.add_dependency "liquid"
   s.add_dependency "texticle", "~> 2.0"
@@ -31,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri"
   s.add_dependency "remotipart", "~> 1.0"
   s.add_dependency "acts_as_list"
+  s.add_dependency "wicked_pdf"
 
   s.add_development_dependency "pg"
   s.add_development_dependency "rspec"
