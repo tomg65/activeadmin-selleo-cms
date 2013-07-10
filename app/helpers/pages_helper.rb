@@ -81,4 +81,9 @@ module PagesHelper
   def switch_editing
     params[:editing] ? request.url.sub(/\?editing=[^&]*/, '?').sub(/\&editing=[^&]*/, '').sub(/\?$/,'') : request.url+'?editing=true'
   end
+
+  def editing?
+    current_user and params[:editing]=="true"
+  end
+
 end

@@ -1,6 +1,15 @@
 @import 'jquery-ui.css.scss';
 @import 'active_admin/jquery.Jcrop.css';
 
+$blue: #3c5f97;
+$mblue: #45a4dc;
+$lblue: #93c7ef;
+$green: #add537;
+$gray: #e6e6e6;
+$lred: #ef9393;
+$red: #950f0f;
+
+
 div.translation > input {
     -webkit-appearance: none;
     -webkit-background-clip: border-box;
@@ -100,4 +109,193 @@ div.ui-dialog {
 
 .fltr {
     float: right;
+}
+
+.ui-widget-overlay.ui-front {
+  position: fixed;
+  z-index: 1020;
+}
+
+.ui-widget.ui-dialog {
+  font-family: MuseoSans300;
+  z-index: 1021;
+  .ui-dialog-title {
+    font-family: MuseoSlab900;
+    font-weight: normal;
+  }
+  .ui-dialog-titlebar-close {
+    background: none;
+    border: 0;
+    font-family: MuseoSans700;
+    margin: 0;
+    padding: 0 6px 10px;
+    top: 15%;
+    span {
+      display: none;
+    }
+  }
+  .ui-dialog-titlebar-close:after {
+    content: 'x';
+  }
+  .ui-dialog-titlebar-close:hover {
+    color: $red;
+  }
+  .ui-widget-content {
+    a {
+      color: $blue;
+      &:hover {
+        color: $green;
+      }
+    }
+  }
+  h3 {
+    @extend h2;
+    a {
+      float: right;
+    }
+  }
+  hr {
+    border: 0;
+    margin: 40px 0;
+  }
+  li {
+    .label {
+      //@include border-radius(0);
+      background: none;
+      color: #000;
+      font-family: MuseoSans300;
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 24px;
+      padding-right: 10px;
+      text-align: right;
+      text-shadow: none;
+      width: 150px;
+    }
+    input[type="text"], textarea, input[type="file"] {
+      font-family: MuseoSans300;
+      font-size: 14px;
+      line-height: 14px;
+      margin-top: 6px;
+      width: 400px;
+    }
+  }
+  .input_action {
+    padding-left: 28px;
+    input {
+      background: none;
+      border: 0;
+      color: $blue;
+      font-size: 14px;
+      padding: 0;
+      text-decoration: underline;
+      &:hover {
+        color: $green;
+        text-decoration: none;
+      }
+    }
+  }
+  small {
+    display: block;
+    margin-bottom: 20px;
+  }
+  .assets {
+    #assets {
+      margin-left: 0;
+      li {
+        clear: both;
+        float: none;
+        max-width: 100%;
+        margin-bottom: 20px;
+        .attachment, .related_item {
+          //@include border-radius(5px);
+          //@include clearfix;
+          background: #f4f4f4;
+          cursor: move;
+          .cover-image {
+            float: left;
+            line-height: 24px;
+            margin-right: 20px;
+            text-align: center;
+            width: 80px;
+            img {
+              max-height: 50px;
+              max-width: 80px;
+            }
+          }
+          .file-name {
+            padding-top: 3px;
+          }
+          a {
+            font-size: 14px;
+            &.fltr {
+              margin-right: 5px;
+            }
+          }
+        }
+        .related_item {
+          padding: 5px 10px;
+        }
+      }
+    }
+  }
+  legend {
+    @extend h2;
+    i {
+      float: right;
+    }
+  }
+  label {
+    input[type="checkbox"] {
+      margin-left: 27%;
+      margin-right: 1%;
+      vertical-align: top;
+    }
+  }
+  .language-selection {
+    margin-bottom: 10px;
+    li {
+      a {
+        cursor: pointer;
+        font-family: MuseoSans300;
+        font-size: 14px;
+      }
+    }
+  }
+  .inline-hints {
+    color: gray;
+    font-size: 12px;
+  }
+  .actions {
+    ol {
+      margin: 10px 0 0;
+      li {
+        float: left;
+        padding: 0 10px 0 0;
+        a, input {
+          @extend .buttons-big;
+          background-color: $gray;
+          color: $blue;
+          padding-left: 10px;
+        }
+        input {
+          &:hover {
+            background-color: $green;
+          }
+        }
+      }
+    }
+    & + a {
+      @extend .buttons-big;
+      background-color: $gray;
+      color: $blue;
+      float: right;
+      padding-left: 10px;
+      margin-top: -40px;
+      &:hover {
+        background-color: $green;
+        color: #fff;
+      }
+    }
+  }
 }
