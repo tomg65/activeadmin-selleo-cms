@@ -1,0 +1,37 @@
+pl:
+  activerecord:
+    attributes:
+      activeadmin_selleo_cms/image:
+        data: "Obraz"
+      activeadmin_selleo_cms/attachment:
+        data: "Załącznik"
+        cover: "Okładka"
+  active_admin:
+    cms:
+      close: "Zamknij"
+      view_on_site: "Zobacz na stronie"
+      sub_pages: "Podstrony"
+      edit: "Edytuj"
+      delete: "Usuń"
+      no_sections_defined: "Brak zdefiniowanych sekcji"
+      navigation: "Nawigacja"
+      general_options: "Opcje"
+      metadata: "Metadane"
+      sections: "Sekcje"
+      save_changes: "Zapisz zmiany"
+      back: "Powrót"
+      edit_image: "Edytuj obraz"
+      edit_attachment: "Edytuj załącznik"
+      manage_images: "Zarządzaj obrazami"
+      manage_attachments: "Zarządzaj załącznikami"
+      manage_related: "Zarządzaj powiązanymi stronami"
+      reorder: "Zmień kolejność"
+      file_manager:
+        title: "Zarządzanie plikami"
+        upload_file: "Wgraj plik"
+        manage_files: "Zarządzaj plikami"
+        edit_attachment: "Edytuj załącznik"
+        edit_image: "Edytuj obraz"
+        edit_related_item: "Edytuj powiązaną stronę"
+        hint: "Przeciągnij i upuść aby zmienić kolejność"
+        no_cover: "Brak okładki"

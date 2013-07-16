@@ -25,6 +25,7 @@ en:
       manage_images: "Manage images"
       manage_attachments: "Manage attachments"
       manage_related: "Manage related"
+      reorder: "Reorder"
       file_manager:
         title: "File manager"
         upload_file: "Upload file"

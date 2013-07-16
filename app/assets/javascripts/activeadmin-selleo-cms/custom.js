@@ -50,6 +50,12 @@ function editPage(page_id) {
     }).dialog('open');
 }
 
+function editAccessRights(page_id) {
+    $('#file-manager').html('').load('/admin/pages/'+page_id+'/access_rights.js', function() {
+        $(this).dialog("option", "position", ['center', 'center'] );
+    }).dialog('open');
+}
+
 function delete_asset(asset_id) {
     if(confirm('Are you sure?')) {
         $.ajax({
@@ -158,6 +164,9 @@ function savePage(){
 $(function(){
     if ( (typeof EDITING != "undefined") && (EDITING == true) ) {
         $('section').addClass("editing");
+    }
+
+    if ( $('#file-manager').size() > 0 ) {
         $('#file-manager').dialog({
             width: 'auto',
             height: 'auto',
