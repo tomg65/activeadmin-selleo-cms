@@ -29,7 +29,14 @@ ActiveAdmin.register Translation do
 
   controller do
     def collection
-      (get_collection_ivar || set_collection_ivar(active_admin_collection)).reorder(:key).select("DISTINCT(key)")
+      _collection = get_collection_ivar
+
+      return _collection if _collection
+
+      _collection = find_collection.reorder(:key).select("DISTINCT(key)")
+      authorize! ActiveAdmin::Authorization::READ, active_admin_config.resource_class
+
+      set_collection_ivar _collection
     end
   end
 end
