@@ -99,7 +99,7 @@ function update_positions(pagesArray) {
 }
 
 $(function(){
-    $('#translations.index input').blur(function(evt){
+    $('#index_table_translations.index input').blur(function(evt){
         $.ajax({
             url: $(evt.target).data('route') + '.js',
             type: 'PUT',
