@@ -5,11 +5,12 @@ CKEDITOR.dialog.add( 'formswidgetDialog', function ( editor ) {
         type: 'GET',
         async: false,
         success: function(resp){
-            items = [$.map(resp, function(obj, idx) {
-                return [obj.title, obj.id]
-            })]
+            items = $.map(resp, function(obj, idx) {
+                return [[obj.title, obj.id]]
+            })
         }
     });
+    debugger;
 
     return {
         title: 'Insert form',
