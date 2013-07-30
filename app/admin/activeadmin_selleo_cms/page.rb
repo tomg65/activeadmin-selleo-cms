@@ -117,7 +117,6 @@ ActiveAdmin.register ActiveadminSelleoCms::Page, as: "Page", sort_order: "lft_as
         li t("active_admin.cms.no_sections_defined")
       end
     end
-    button_to_function(t("active_admin.cms.save_changes"), "savePage()")
   end
 
 end
