@@ -1,14 +1,15 @@
 = semantic_nested_form_for [:admin, @form, @form_question], url: (@form_question.new_record? ? admin_form_form_questions_path(@form.id) : admin_form_form_question_path(@form.id, @form_question.id)), remote: true, html: {id: "form_question_form"} do |form|
   = form.inputs "Options" do
     = form.input :title
-    = form.input :hint
-    = form.input :is_required
-    - unless @form_question.is_type?('file')
-      = form.input :is_multi
     = form.input :question_type, as: :hidden
-    - if @form_question.is_type?('select')
-      = form.input :has_other_option
-      = form.input :order, as: :hidden
+    - unless @form_question.is_type?('label')
+      = form.input :hint
+      = form.input :is_required
+      - unless @form_question.is_type?('file')
+        = form.input :is_multi
+      - if @form_question.is_type?('select')
+        = form.input :has_other_option
+        = form.input :order, as: :hidden
 
   - if @form_question.is_type?('select')
     = form.inputs "Add options" do

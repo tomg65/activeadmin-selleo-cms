@@ -18,5 +18,9 @@ module ActiveadminSelleoCms
       end
     end
 
+    def label
+      title
+    end
+
   end
 end

@@ -35,3 +35,10 @@ en:
         edit_related_item: "Edit related"
         hint: "Hint: drag and drop files to reorder them"
         no_cover: "No cover image"
+      forms:
+        submit: "Submit form"
+        print: "Print"
+        pdf: "Download PDF"
+        select_file: "Select file"
+        other: "Other"
+        required: "&nbsp;(required)"

@@ -24,7 +24,7 @@
           },
 
           receive:function (event, ui) {
-             $('#question_container').load("#{new_admin_form_form_question_url(@form)}?question_type="+$(ui.helper).attr("data-qtype")).dialog({modal:true, closeOnEscape: false});
+             $('#question_container').load("#{new_admin_form_form_question_url(@form)}?question_type="+$(ui.helper).attr("data-qtype")).dialog({modal:true, closeOnEscape: false, width: 800});
           }
       }).disableSelection();
 
@@ -46,5 +46,5 @@
   }
 
   function editQuestion(id){
-    $('#question_container').load("/admin/forms/#{@form.id}/form_questions/" + id + "/edit").dialog({modal:true, closeOnEscape: false});
+    $('#question_container').load("/admin/forms/#{@form.id}/form_questions/" + id + "/edit").dialog({modal:true, closeOnEscape: false, width: 800});
   }

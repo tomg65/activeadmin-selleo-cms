@@ -4,8 +4,9 @@ module ActiveadminSelleoCms
     TYPE_TEXT = 0
     TYPE_SELECT = 1
     TYPE_FILE = 2
-    TYPES = [TYPE_TEXT, TYPE_SELECT, TYPE_FILE]
-    TYPE_NAMES = ["text question", "select question", "file upload"]
+    TYPE_LABEL = 3
+    TYPES = [TYPE_TEXT, TYPE_SELECT, TYPE_FILE, TYPE_LABEL]
+    TYPE_NAMES = ["text question", "select question", "file upload", "label"]
 
     belongs_to :form
     has_many :options, class_name: "FormQuestionOption", :order => "position"
@@ -25,7 +26,7 @@ module ActiveadminSelleoCms
       end
 
       def question_type_dictionary(int)
-        ["text question", "select question", "file upload"][int]
+        ["text question", "select question", "file upload", "label"][int]
       end
 
     end
@@ -57,6 +58,8 @@ module ActiveadminSelleoCms
         :radio_button_tag
       elsif question_type == TYPE_FILE
         :file_field_tag
+      elsif question_type == TYPE_LABEL
+        :legend
       end
     end
 
@@ -68,6 +71,10 @@ module ActiveadminSelleoCms
       else
         {}
       end
+    end
+
+    def label
+      "#{title}#{'<i>'+I18n.t("active_admin.cms.forms.required")+'</i>' if is_required}".html_safe
     end
 
   end

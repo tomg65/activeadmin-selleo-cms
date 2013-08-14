@@ -1,18 +1,24 @@
+<%= button_to_function t("active_admin.cms.forms.submit"), "deliver(#{form.id}, '#{dom_id(form)}')", class: 'send' %>
+
 <%= form_tag '/forms', multipart: true, id: dom_id(form), data: {form_id: form.id} do %>
   <ol class="questions">
     <% form.questions.each do |question| %>
       <li class="question <%= question.input_type %>">
-        <div class="questions_labels">
-            <%= label_tag dom_id(question), question.title %>
-            <% if question.hint.present? %>
-                <p class="hint"><%=  question.hint  %></p>
-            <% end %>
-        </div>
+
+        <% unless question.input_type == :legend %>
+            <div class="questions_labels">
+                <%= label_tag dom_id(question), question.label %>
+                <% if question.hint.present? %>
+                    <p class="hint"><%=  question.hint  %></p>
+                <% end %>
+            </div>
+        <% end %>
+
         <% if [:check_box_tag].include? question.input_type %>
             <div class="questions_options">
                 <% question.options.each do |option| %>
                     <%= send(question.input_type, "#{dom_id(question)}[]", option.id, false, required: question.is_required, id: dom_id(option), data: {form_question_id: question.id} ) %>
-                    <%= label_tag dom_id(option), option.title %>
+                    <%= label_tag dom_id(option), option.label %>
                 <% end %>
                 <%= text_field_tag "#{dom_id(question)}_other", "", data: {form_question_id: question.id} if question.has_other_option %>
             </div>
@@ -20,12 +26,18 @@
             <div class="questions_options">
                 <% question.options.each do |option| %>
                     <%= send(question.input_type, dom_id(question), option.id, false, required: question.is_required, id: dom_id(option), data: {form_question_id: question.id}) %>
-                    <%= label_tag dom_id(option), option.title %>
+                    <%= label_tag dom_id(option), option.label %>
                 <% end %>
+                <%= label_tag "#{dom_id(question)}_other", t("active_admin.cms.forms.other") %>
                 <%= text_field_tag "#{dom_id(question)}_other", "", data: {form_question_id: question.id} if question.has_other_option %>
             </div>
         <% elsif [:file_field_tag].include? question.input_type %>
-            <%= button_to_function "Select file", "fileUpload('#{dom_id(form)}', '#{dom_id(question)}', #{question.id})", style: "padding: 5px;" %>
+            <div class="file_upload" data-question-id="<%= question.id %>">
+                <p></p>
+                <%= button_to_function t("active_admin.cms.forms.select_file"), "fileUpload('#{dom_id(form)}', '#{dom_id(question)}', #{question.id})", style: "padding: 5px;" %>
+            </div>
+        <% elsif question.input_type == :legend %>
+            <legend><%= question.label %></legend>
         <% else %>
             <%= send(question.input_type, dom_id(question), "", required: question.is_required, data: {form_question_id: question.id}) %>
         <% end %>
@@ -34,9 +46,9 @@
   </ol>
 <% end %>
 
-<%= button_to_function "Print", "print(#{form.id}, '#{dom_id(form)}')", class: 'print', title: 'Print' %>
-<%= button_to_function "Download PDF", "downloadPDF(#{form.id}, '#{dom_id(form)}')", class: 'save', title: 'Download PDF' %>
-<%= button_to_function "Send to JIPS", "deliver(#{form.id}, '#{dom_id(form)}')", class: 'send' %>
+<%= button_to_function "", "print(#{form.id}, '#{dom_id(form)}')", class: 'print', title: t("active_admin.cms.forms.print") %>
+<%= button_to_function "", "downloadPDF(#{form.id}, '#{dom_id(form)}')", class: 'save', title: t("active_admin.cms.forms.pdf") %>
+<%= button_to_function t("active_admin.cms.forms.submit"), "deliver(#{form.id}, '#{dom_id(form)}')", class: 'send' %>
 
 <script>
   $(function(){
