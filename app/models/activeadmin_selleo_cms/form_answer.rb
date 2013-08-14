@@ -1,14 +1,13 @@
 module ActiveadminSelleoCms
   class FormAnswer < ActiveRecord::Base
-    attr_accessible :form_uuid, :dom_id, :form_id, :form_question_id, :value, :data
+    attr_accessible :form_uuid, :dom_id, :form_id, :form_question_id, :value, :form_answer_attachments_attributes
     validates_presence_of :form_uuid, :dom_id
-
-    has_attached_file :data,
-                      :url  => "/system/cms/form_answers/:id/:style_:basename.:extension",
-                      :path => ":rails_root/public/system/cms/form_answers/:id/:style_:basename.:extension"
 
     belongs_to :form
     belongs_to :form_question
+    has_many :form_answer_attachments
+
+    accepts_nested_attributes_for :form_answer_attachments
 
     after_save do
       if form_question.input_type == :radio_button_tag and !dom_id.match(/_other/)
@@ -24,11 +23,11 @@ module ActiveadminSelleoCms
       end
     end
 
-    def self.file_for(form_uuid, dom_id)
-      if answer = self.where(form_uuid: form_uuid, dom_id: dom_id).first and answer.data.exists?
-        answer
+    def self.files_for(form_uuid, dom_id)
+      if answer = self.where(form_uuid: form_uuid, dom_id: dom_id).first
+        answer.form_answer_attachments
       else
-        nil
+        []
       end
     end
 

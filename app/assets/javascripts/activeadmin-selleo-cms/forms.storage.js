@@ -50,8 +50,6 @@ function setupCmsForm(form_id) {
                     if (this["value"] == "true") {
                         $(form_elem).attr('checked', true);
                     }
-                } else if ($(form_elem).attr('type') == 'file') {
-                    // do nothing
                 } else {
                     $(form_elem).val(this["value"]);
                 }
@@ -67,4 +65,8 @@ function setupCmsForm(form_id) {
       } else {
           submitAnswer(form_id, this, $(this).val())
     }});
+
+    $.each($('.file_upload'), function(){
+        $(this).find('.files').load('/form_answers/attachments?form_uuid='+localStorage[form_id]+'&form_question_id='+$(this).data('question-id'));
+    });
 }

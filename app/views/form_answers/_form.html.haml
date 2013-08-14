@@ -1,5 +1,7 @@
+%legend= t("active_admin.cms.forms.upload_new_file")
 = semantic_form_for @form_answer, remote: true, html: { multipart: true } do |form|
 
-  = form.inputs id: 'attachment_fields' do
-    = form.input :data, hint: @form_answer.data_file_name
-    = form.actions :submit
+  = form.semantic_fields_for :form_answer_attachments, form.object.form_answer_attachments.build do |attachment_form|
+    = attachment_form.input :data, hint: @form_answer.data_file_name
+
+    = form.action :submit, label: t("active_admin.cms.forms.upload_file"), as: :button

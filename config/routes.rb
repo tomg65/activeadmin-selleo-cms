@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :form_answers do
     collection do
       post :find_or_create
+      get :attachments
     end
   end
 

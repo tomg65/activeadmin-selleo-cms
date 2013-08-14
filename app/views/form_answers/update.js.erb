@@ -1,2 +1,2 @@
-$('#popup').effect('highlight');
-$('#popup form').html('<%= j render partial: 'form' %>');
+$('#popup').dialog('close');
+$('[data-question-id="<%= @form_answer.form_question.id %>"] .files').html('<%= j render partial: 'attachments' %>');

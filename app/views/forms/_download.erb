@@ -34,9 +34,13 @@
               <%= text_field_tag "#{dom_id(question)}_other", ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], "#{dom_id(question)}_other"), data: {form_question_id: question.id} if question.has_other_option %>
             </div>
         <% elsif [:file_field_tag].include? question.input_type %>
-            <% if file = ActiveadminSelleoCms::FormAnswer.file_for(params[:form_uuid], dom_id(question)) %>
-                <p><%= link_to file.data_file_name, file.data.url %></p>
-            <% end %>
+            <div class="file_upload">
+                <ol>
+                  <% ActiveadminSelleoCms::FormAnswer.files_for(params[:form_uuid], dom_id(question)).each do |file| %>
+                      <li><%= file.data_file_name %></li>
+                  <% end %>
+                </ol>
+            </div>
         <% elsif question.input_type == :legend %>
             <legend><%= question.label %></legend>
         <% else %>

@@ -33,8 +33,8 @@
             </div>
         <% elsif [:file_field_tag].include? question.input_type %>
             <div class="file_upload" data-question-id="<%= question.id %>">
-                <p></p>
-                <%= button_to_function t("active_admin.cms.forms.select_file"), "fileUpload('#{dom_id(form)}', '#{dom_id(question)}', #{question.id})", style: "padding: 5px;" %>
+              <div class="files"></div>
+              <%= button_to_function t("active_admin.cms.forms.upload_new_file"), "fileUpload('#{dom_id(form)}', '#{dom_id(question)}', #{question.id})", style: "padding: 5px;" %>
             </div>
         <% elsif question.input_type == :legend %>
             <legend><%= question.label %></legend>
