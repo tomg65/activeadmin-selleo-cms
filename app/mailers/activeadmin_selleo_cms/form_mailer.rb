@@ -3,7 +3,10 @@ module ActiveadminSelleoCms
     def form_submission(form, form_uuid)
       @form = form
       @form_uuid = form_uuid
-      mail(subject: "New form submission")
+      mail(
+          to: @form.delivery_emails(@form_uuid),
+          subject: I18n.t("active_admin.cms.forms.email_subject")
+      )
     end
   end
 end

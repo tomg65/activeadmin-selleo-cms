@@ -1,6 +1,7 @@
 = semantic_form_for [:admin, @form], url: admin_form_path(@form) do |form|
   = form.inputs "General options" do
     = form.input :title
+    = form.input :email, label: t("active_admin.cms.forms.email")
 
   %ol.draggable_questions_container
     - ActiveadminSelleoCms::FormQuestion::TYPES.each do |qtype|

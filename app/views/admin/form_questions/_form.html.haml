@@ -5,7 +5,7 @@
     - unless @form_question.is_type?('label')
       = form.input :hint
       = form.input :is_required
-      - unless @form_question.is_type?('file')
+      - unless @form_question.is_type?('file') or @form_question.is_type?('email')
         = form.input :is_multi
       - if @form_question.is_type?('select')
         = form.input :has_other_option

@@ -37,7 +37,8 @@
             <% if file = ActiveadminSelleoCms::FormAnswer.file_for(params[:form_uuid], dom_id(question)) %>
                 <p><%= link_to file.data_file_name, file.data.url %></p>
             <% end %>
-            <%#= button_to_function "Select file", "fileUpload('#{dom_id(@form)}', '#{dom_id(question)}', #{question.id})", style: "padding: 5px;" %>
+        <% elsif question.input_type == :legend %>
+            <legend><%= question.label %></legend>
         <% else %>
             <%= send(question.input_type, dom_id(question), ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], dom_id(question)), required: question.is_required, data: {form_question_id: question.id}) %>
         <% end %>

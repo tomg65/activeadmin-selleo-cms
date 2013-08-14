@@ -42,3 +42,5 @@ en:
         select_file: "Select file"
         other: "Other"
         required: "&nbsp;(required)"
+        email: "Delivery email"
+        email_subject: "New form has been submitted"

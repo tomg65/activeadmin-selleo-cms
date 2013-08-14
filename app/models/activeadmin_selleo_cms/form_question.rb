@@ -5,11 +5,13 @@ module ActiveadminSelleoCms
     TYPE_SELECT = 1
     TYPE_FILE = 2
     TYPE_LABEL = 3
-    TYPES = [TYPE_TEXT, TYPE_SELECT, TYPE_FILE, TYPE_LABEL]
-    TYPE_NAMES = ["text question", "select question", "file upload", "label"]
+    TYPE_EMAIL = 4
+    TYPES = [TYPE_TEXT, TYPE_SELECT, TYPE_FILE, TYPE_LABEL, TYPE_EMAIL]
+    TYPE_NAMES = ["text question", "select question", "file upload", "label", "email"]
 
     belongs_to :form
     has_many :options, class_name: "FormQuestionOption", :order => "position"
+    has_many :answers, class_name: "FormAnswer"
 
     acts_as_list :scope => :form_id
 
@@ -26,7 +28,7 @@ module ActiveadminSelleoCms
       end
 
       def question_type_dictionary(int)
-        ["text question", "select question", "file upload", "label"][int]
+        TYPE_NAMES[int]
       end
 
     end
@@ -60,6 +62,8 @@ module ActiveadminSelleoCms
         :file_field_tag
       elsif question_type == TYPE_LABEL
         :legend
+      elsif question_type == TYPE_EMAIL
+        :email_field_tag
       end
     end
 
