@@ -70,3 +70,14 @@ function setupCmsForm(form_id) {
         $(this).find('.files').load('/form_answers/attachments?form_uuid='+localStorage[form_id]+'&form_question_id='+$(this).data('question-id'));
     });
 }
+
+function deleteFormAttachment(answer_id, att_id) {
+    if(confirm('Are you sure?')) {
+        $.ajax({
+            url: '/form_answers/'+answer_id+'/form_answer_attachments/' + att_id + '.js',
+            type: 'DELETE'
+        }).error(function(){
+                alert('An error occured while trying to delete the asset');
+            });
+    }
+}

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post :find_or_create
       get :attachments
     end
+    resources :form_answer_attachments, only: :destroy
   end
 
   scope ":locale", :locale => /\w{2}/ do

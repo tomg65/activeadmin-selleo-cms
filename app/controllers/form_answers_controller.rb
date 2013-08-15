@@ -31,8 +31,11 @@ class FormAnswersController < ApplicationController
   end
 
   def attachments
-    @form_answer = ActiveadminSelleoCms::FormAnswer.where(form_uuid: params[:form_uuid], form_question_id: params[:form_question_id]).first
-    render partial: 'attachments'
+    if @form_answer = ActiveadminSelleoCms::FormAnswer.where(form_uuid: params[:form_uuid], form_question_id: params[:form_question_id]).first
+      render partial: 'attachments'
+    else
+      render nothing: true
+    end
   end
 
 end

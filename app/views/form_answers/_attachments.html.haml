@@ -1,3 +1,5 @@
 %ol
   - @form_answer.form_answer_attachments.each do |att|
-    %li= att.data_file_name
+    %li{ :data => { "attachment-id" => att.id } }
+      = att.data_file_name
+      %small= link_to_function t("active_admin.cms.forms.delete"), "deleteFormAttachment(#{@form_answer.id},#{att.id})"
