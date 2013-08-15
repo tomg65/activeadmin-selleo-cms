@@ -21,7 +21,11 @@ class FormsController < ApplicationController
   def deliver
     respond_to do |format|
       format.html do
-        ActiveadminSelleoCms::FormMailer.form_submission(@form, params[:form_uuid]).deliver
+        if ActiveadminSelleoCms::FormMailer.respond_to? :delay
+          ActiveadminSelleoCms::FormMailer.delay.form_submission(@form, params[:form_uuid])
+        else
+          ActiveadminSelleoCms::FormMailer.form_submission(@form, params[:form_uuid]).deliver
+        end
         flash[:notice] = "Your form has been sent. Thank you."
       end
     end

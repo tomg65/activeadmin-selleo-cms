@@ -1,0 +1,40 @@
+!!!
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = wicked_pdf_stylesheet_link_tag "components/forms"
+  %body
+    = form_tag '/forms', multipart: true, id: dom_id(@form), data: {form_id: @form.id} do
+      %ol.questions
+        - @form.questions.each do |question|
+          %li{:class => "question #{question.input_type}"}
+            - unless question.input_type == :legend
+              .questions_labels
+                = label_tag dom_id(question), question.title
+                - if question.hint.present?
+                  %p.hint= question.hint
+            - if [:check_box_tag].include? question.input_type
+              .questions_options
+                - question.options.each do |option|
+                  = send(question.input_type, "#{dom_id(question)}[]", option.id, ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], dom_id(option))=="true", required: question.is_required, id: dom_id(option), data: {form_question_id: question.id} )
+                  = label_tag dom_id(option), option.title
+                - if question.has_other_option
+                  = label_tag "#{dom_id(question)}_other", t("active_admin.cms.forms.other")
+                  = text_field_tag "#{dom_id(question)}_other", ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], "#{dom_id(question)}_other"), data: {form_question_id: question.id} if question.has_other_option
+            - elsif [:radio_button_tag].include? question.input_type
+              .questions_options
+                - question.options.each do |option|
+                  = send(question.input_type, dom_id(question), option.id, ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], dom_id(option)), required: question.is_required, id: dom_id(option), data: {form_question_id: question.id})
+                  = label_tag dom_id(option), option.title
+                - if question.has_other_option
+                  = label_tag "#{dom_id(question)}_other", t("active_admin.cms.forms.other")
+                  = text_field_tag "#{dom_id(question)}_other", ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], "#{dom_id(question)}_other"), data: {form_question_id: question.id} if question.has_other_option
+            - elsif [:file_field_tag].include? question.input_type
+              .file_upload
+                %ol
+                  - ActiveadminSelleoCms::FormAnswer.files_for(params[:form_uuid], dom_id(question)).each do |file|
+                    %li= link_to file.data_file_name, file.data.url
+            - elsif question.input_type == :legend
+              %legend= question.label
+            - else
+              = send(question.input_type, dom_id(question), ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], dom_id(question)), required: question.is_required, data: {form_question_id: question.id})

@@ -1,3 +1,3 @@
 module ActiveadminSelleoCms
-  VERSION = "0.0.55"
+  VERSION = "0.0.58"
 end

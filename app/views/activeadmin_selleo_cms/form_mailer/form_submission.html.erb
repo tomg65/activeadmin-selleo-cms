@@ -6,7 +6,13 @@
 <body>
 <h3>A new form "<%= @form.title %>" has been submitted!</h3>
 <p>
-  <%= link_to "Click here for details.", "http://#{ActionMailer::Base.default_url_options[:host]}/forms/#{@form.id}/download?form_uuid=#{@form_uuid}" %>
+  <%= link_to "Click here to preview the form", "http://#{ActionMailer::Base.default_url_options[:host]}/forms/#{@form.id}/download?form_uuid=#{@form_uuid}" %>
+</p>
+<p>
+  <%= link_to "Print", "http://#{ActionMailer::Base.default_url_options[:host]}/forms/#{@form.id}/download?form_uuid=#{@form_uuid}&print=true" %>
+</p>
+<p>
+  <%= link_to "Download PDF", "http://#{ActionMailer::Base.default_url_options[:host]}/forms/#{@form.id}/download.pdf?form_uuid=#{@form_uuid}" %>
 </p>
 </body>
 </html>
