@@ -20,7 +20,7 @@
                   = label_tag dom_id(option), option.title
                 - if question.has_other_option
                   = label_tag "#{dom_id(question)}_other", t("active_admin.cms.forms.other")
-                  = text_field_tag "#{dom_id(question)}_other", ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], "#{dom_id(question)}_other"), data: {form_question_id: question.id} if question.has_other_option
+                  .other= ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], "#{dom_id(question)}_other")
             - elsif [:radio_button_tag].include? question.input_type
               .questions_options
                 - question.options.each do |option|
@@ -28,7 +28,7 @@
                   = label_tag dom_id(option), option.title
                 - if question.has_other_option
                   = label_tag "#{dom_id(question)}_other", t("active_admin.cms.forms.other")
-                  = text_field_tag "#{dom_id(question)}_other", ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], "#{dom_id(question)}_other"), data: {form_question_id: question.id} if question.has_other_option
+                  .other= ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], "#{dom_id(question)}_other")
             - elsif [:file_field_tag].include? question.input_type
               .file_upload
                 %ol
@@ -36,5 +36,7 @@
                     %li= link_to file.data_file_name, file.data.url
             - elsif question.input_type == :legend
               %legend= question.label
+            - elsif [:text_area_tag, :text_field_tag].include? question.input_type
+              .textarea= ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], dom_id(question))
             - else
               = send(question.input_type, dom_id(question), ActiveadminSelleoCms::FormAnswer.value_for(params[:form_uuid], dom_id(question)), required: question.is_required, data: {form_question_id: question.id})
