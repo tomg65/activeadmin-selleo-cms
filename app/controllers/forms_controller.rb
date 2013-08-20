@@ -21,7 +21,7 @@ class FormsController < ApplicationController
   def deliver
     respond_to do |format|
       format.html do
-        if ActiveadminSelleoCms::FormMailer.respond_to? :delay
+        if ActiveadminSelleoCms::FormMailer.respond_to? :delay and !Rails.env.development?
           ActiveadminSelleoCms::FormMailer.delay.form_submission(@form, params[:form_uuid])
         else
           ActiveadminSelleoCms::FormMailer.form_submission(@form, params[:form_uuid]).deliver

@@ -5,7 +5,7 @@ module ActiveadminSelleoCms
       @form_uuid = form_uuid
       mail(
           to: @form.delivery_emails(@form_uuid),
-          subject: I18n.t("active_admin.cms.forms.email_subject")
+          subject: I18n.t("active_admin.cms.forms.new_form_email.subject")
       )
     end
   end

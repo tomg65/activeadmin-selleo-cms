@@ -42,8 +42,15 @@ en:
         other: "Other"
         required: "&nbsp;(required)"
         email: "Delivery email"
-        email_subject: "New form has been submitted"
         upload: "Upload"
         upload_new_file: "Upload new file"
         uploaded_files: "Uploaded files"
         delete: "(delete)"
+        new_form_email:
+          subject: "New form has been submitted"
+          header: "A new form %{form_title} has been submitted!"
+          body: "You can preview, print or download the form as PDF by clicking one of the following links:"
+          preview_link: "Preview"
+          print_link: "Print"
+          pdf_link: "Download PDF"
+
