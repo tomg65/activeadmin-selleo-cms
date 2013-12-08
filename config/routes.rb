@@ -21,11 +21,11 @@ Rails.application.routes.draw do
       resources :searches, path: '', only: [:show]
     end
     # TODO refactor
-    match ':slug5(/:slug4(/:slug3(/:slug2(/:slug1))))'  => 'pages#show'
+    match ':slug5(/:slug4(/:slug3(/:slug2(/:slug1))))'  => 'pages#show', via: [:get, :post]
     resources :pages, path: '', only: [:show, :index]
   end
 
-  match ':locale' => 'pages#show'
+  match ':locale' => 'pages#show', via: [:get, :post]
 
   root to: 'pages#show'
 
