@@ -2,8 +2,8 @@ module PagesHelper
   def link_to_locale(link_name, locale, page=nil)
     if page
       link_to link_name, with_host(url_to_page(page, locale.to_s))
-    elsif request.fullpath.match(/^\/\w{2}\/.*/)
-      link_to link_name, with_host(request.fullpath.gsub(/^\/(\w{2})\//, "/#{locale.code}/"))
+    elsif request.fullpath.match(/\A\/\w{2}\/.*/)
+      link_to link_name, with_host(request.fullpath.gsub(/\A\/(\w{2})\//, "/#{locale.code}/"))
     else
       link_to link_name, with_host("/#{locale.code}")
     end

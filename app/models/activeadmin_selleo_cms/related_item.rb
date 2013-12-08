@@ -6,7 +6,7 @@ module ActiveadminSelleoCms
     belongs_to :page
 
     validates_presence_of :page_id, if: ->(ri){ ri.related_url.blank? }
-    validates :related_url, presence: true, format: { with: /^http/i }, if: ->(ri){ ri.page_id.blank? }
+    validates :related_url, presence: true, format: { with: /\Ahttp/i }, if: ->(ri){ ri.page_id.blank? }
 
     def target_title
       title.present? ? title : (page.present? ? page.title : related_url)

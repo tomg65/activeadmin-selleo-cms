@@ -150,7 +150,7 @@ module ActiveadminSelleoCms
       belongs_to :activeadmin_selleo_cms_page, class_name: 'ActiveadminSelleoCms::Page'
 
       validates :title, presence: true, if: ->(translation){ translation.locale.eql? I18n.default_locale }
-      validates :slug, presence: true, format: { with: /^[a-z0-9\-_]+$/i }, if: ->(translation) { translation.locale.eql? I18n.default_locale }
+      validates :slug, presence: true, format: { with: /\A[a-z0-9\-_]+\z/i }, if: ->(translation) { translation.locale.eql? I18n.default_locale }
       validate do |translation|
         if slug.present? and translation.class.joins(:activeadmin_selleo_cms_page).
             where(locale: locale, slug: slug, activeadmin_selleo_cms_pages: { parent_id: activeadmin_selleo_cms_page.parent_id }).all.reject{|p| p == self}.any?

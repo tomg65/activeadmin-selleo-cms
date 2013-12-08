@@ -34,7 +34,7 @@ module ActiveadminSelleoCms
       end
 
       def method_missing(sym, *args)
-        if sym.to_s =~ /^[a-z]{2}$/
+        if sym.to_s =~ /\A[a-z]{2}\z/
           Locale.where(code: sym).first
         else
           super
