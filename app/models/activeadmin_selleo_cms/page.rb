@@ -16,7 +16,7 @@ module ActiveadminSelleoCms
 
     accepts_nested_attributes_for :translations, :sections, :children
 
-    validates_format_of :link_url, with: /^http/i, allow_blank: false, if: ->(page) { page.is_link_url }
+    validates_format_of :link_url, with: /\Ahttp/i, allow_blank: false, if: ->(page) { page.is_link_url }
     validates_presence_of :layout_name
 
     scope :show_in_menu, where(show_in_menu: true)
