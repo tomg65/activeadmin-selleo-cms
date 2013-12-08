@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", ">= 4.0.0"
+    s.add_dependency "protected_attributes"
   s.add_dependency "jquery-rails", "~> 2.2.1"
   s.add_dependency "jquery-ui-rails", "~> 4.0.1"
   s.add_dependency "activeadmin", "~> 1.0.0.pre"
