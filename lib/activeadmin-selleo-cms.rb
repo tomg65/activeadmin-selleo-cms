@@ -1,4 +1,4 @@
-require "globalize3"
+require "globalize"
 require "ckeditor"
 require "language_list"
 require "paperclip"
