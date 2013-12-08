@@ -17,8 +17,8 @@ module ActiveadminSelleoCms
     validates_associated :translations
 
     scope :with_name, ->(section_name) { where(name: section_name) }
-    scope :blurbs, where("name ILIKE 'blurb.%'")
-    scope :help, where("name ILIKE 'help.%'")
+    scope :blurbs, where("`name` LIKE 'blurb.%'")
+    scope :help, where("`name` LIKE 'help.%'")
 
     def toolbar
       case name

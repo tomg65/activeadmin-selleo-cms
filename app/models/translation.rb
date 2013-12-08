@@ -8,8 +8,8 @@ class Translation < ActiveRecord::Base
   validates :key, presence: true, uniqueness: { scope: :locale }
 
   scope :incomplete, where(value: nil)
-  scope :cms, -> { where("key LIKE '%cms.%'") }
-  scope :active_admin, -> { where("key LIKE '%active_admin.%'") }
+  scope :cms, -> { where("`key` LIKE '%cms.%'") }
+  scope :active_admin, -> { where("`key` LIKE '%active_admin.%'") }
 
   def method_missing(sym, *args)
     if ActiveadminSelleoCms::Locale.enabled.map(&:code).include?(sym)
