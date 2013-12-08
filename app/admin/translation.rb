@@ -33,7 +33,7 @@ ActiveAdmin.register Translation do
 
       return _collection if _collection
 
-      _collection = find_collection.reorder(:key).select("DISTINCT(key)")
+      _collection = find_collection.reorder(:key).select("DISTINCT(`key`)")
       authorize! ActiveAdmin::Authorization::READ, active_admin_config.resource_class
 
       set_collection_ivar _collection
